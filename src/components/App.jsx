@@ -1,25 +1,37 @@
 import { Component } from 'react';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
+import { customAlphabet } from 'nanoid';
 
 export class App extends Component {
-  state = { contacts: [], name: '', number: '' };
+  state = { contacts: [], name: '', number: '', filter: '' };
 
   handleSubmit = e => {
     e.preventDefault();
-    const { contacts } = this.state;
+    // const { contacts } = this.state;
     console.log(e.target.elements.name.value);
     console.log(e.target.elements.number.value);
     const name = e.target.elements.name.value;
     const number = e.target.elements.number.value;
-    contacts.push({ [name]: number });
-    console.dir(contacts);
-    this.setState({ contacts });
+    const nanoid = customAlphabet('1234567890', 2);
+    const id = 'id-' + nanoid(2);
+    console.log('id', id);
+    const contact = { id, name, number };
+    this.setState(({ contacts }) => ({ contacts: [contact, ...contacts] }));
     console.dir(this.state);
   };
 
+  changeFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
+  };
+
   render() {
-    const {contacts}=this.state
+    const { contacts, filter } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+    const visibleContacts=contacts.filter(contact=> contact.name.toLowerCase().includes(normalizedFilter))
+
     return (
+      <>
+        <h1>Phonebook</h1>
         <form onSubmit={this.handleSubmit}>
           <label>
             Name
@@ -42,17 +54,26 @@ export class App extends Component {
             />
           </label>
           <button type="submit">Add contact</button>
-          <div>
-          <p>Contacts</p>
+        </form>
+        <div>
+          <h2>Contacts</h2>
+          <label>
+            Find contacts by name
+            <input type="text" value={filter} onChange={this.changeFilter} />
+          </label>
+
           <ul>
-            {contacts.map((contact, idx) => {
-              const propName=Object.keys(contact)
-              return <li key={idx}><span>{propName}:</span><span>{contact[propName]}</span></li>;
+            {visibleContacts.map(({ id, name, number }) => {
+              return (
+                <li key={id}>
+                  <span>{name}:</span>
+                  <span>{number}</span>
+                </li>
+              );
             })}
           </ul>
         </div>
-        </form>
-       
+      </>
     );
   }
 }
