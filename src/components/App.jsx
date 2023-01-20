@@ -24,11 +24,18 @@ export class App extends Component {
     this.setState({ filter: e.currentTarget.value });
   };
 
-  render() {
+  getVisibleContacts = () => {
     const { contacts, filter } = this.state;
     const normalizedFilter = filter.toLowerCase();
-    const visibleContacts=contacts.filter(contact=> contact.name.toLowerCase().includes(normalizedFilter))
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
 
+  render() {
+    const { filter } = this.state;
+
+    const visibleContacts = this.getVisibleContacts();
     return (
       <>
         <h1>Phonebook</h1>
