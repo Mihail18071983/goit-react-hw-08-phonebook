@@ -7,17 +7,13 @@ export class App extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    // const { contacts } = this.state;
-    console.log(e.target.elements.name.value);
-    console.log(e.target.elements.number.value);
     const name = e.target.elements.name.value;
     const number = e.target.elements.number.value;
     const nanoid = customAlphabet('1234567890', 2);
     const id = 'id-' + nanoid(2);
-    console.log('id', id);
     const contact = { id, name, number };
-    this.setState(({ contacts }) => ({ contacts: [contact, ...contacts] }));
-    console.dir(this.state);
+    this.setState((prevState) => ({ contacts: [contact, ...prevState.contacts] }));
+    console.log(this.state);
   };
 
   changeFilter = e => {
