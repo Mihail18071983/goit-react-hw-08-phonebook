@@ -7,7 +7,6 @@ export class App extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    // const {name, number}= this.state
     const name = e.target.elements.name.value;
     const number = e.target.elements.number.value;
     const nanoid = customAlphabet('1234567890', 2);
@@ -24,7 +23,12 @@ export class App extends Component {
         return { contacts: [...prevState.contacts] };
       }
     });
+    
   };
+
+  reset=()=> {
+    this.setState ={ name: '', number: ''}
+  }
 
   getContactNames = () => {
     const { contacts } = this.state;
