@@ -7,14 +7,23 @@ export class App extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    // const {name, number}= this.state
     const name = e.target.elements.name.value;
     const number = e.target.elements.number.value;
     const nanoid = customAlphabet('1234567890', 2);
     const id = 'id-' + nanoid(2);
     const contact = { id, name, number };
-    this.setState((prevState) => ({ contacts: [contact, ...prevState.contacts] }));
-    console.log(this.state);
+    const contactNames=this.getContactNames();
+    this.setState(prevState => ( !contactNames.includes(contact.name) ? 
+      {
+      contacts: [contact, ...prevState.contacts]
+    }:{contacts: [ ...prevState.contacts]}));
   };
+
+  getContactNames=()=>{
+    const {contacts}=this.state
+    return contacts.map(contact=>contact.name)
+  }
 
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
