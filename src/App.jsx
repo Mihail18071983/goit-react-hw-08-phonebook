@@ -13,17 +13,23 @@ export class App extends Component {
     const nanoid = customAlphabet('1234567890', 2);
     const id = 'id-' + nanoid(2);
     const contact = { id, name, number };
-    const contactNames=this.getContactNames();
-    this.setState(prevState => ( !contactNames.includes(contact.name) ? 
-      {
-      contacts: [contact, ...prevState.contacts]
-    }:{contacts: [ ...prevState.contacts]}));
+    const contactNames = this.getContactNames();
+    this.setState(prevState => {
+      if (!contactNames.includes(contact.name)) {
+        return {
+          contacts: [contact, ...prevState.contacts],
+        };
+      } else {
+        alert(`${contact.name} has already added in contacts`);
+        return { contacts: [...prevState.contacts] };
+      }
+    });
   };
 
-  getContactNames=()=>{
-    const {contacts}=this.state
-    return contacts.map(contact=>contact.name)
-  }
+  getContactNames = () => {
+    const { contacts } = this.state;
+    return contacts.map(contact => contact.name);
+  };
 
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
@@ -35,6 +41,12 @@ export class App extends Component {
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
+  };
+
+  deleteContact = contactID => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactID),
+    }));
   };
 
   render() {
@@ -80,6 +92,9 @@ export class App extends Component {
                 <li key={id}>
                   <span>{name}:</span>
                   <span>{number}</span>
+                  <button type="button" onClick={() => this.deleteContact(id)}>
+                    delete
+                  </button>
                 </li>
               );
             })}
