@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { customAlphabet } from 'nanoid';
+
 
 class ContactForm extends Component {
   state = { contacts: [], name: '', number: '' };
@@ -13,23 +13,7 @@ class ContactForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const name = e.target.elements.name.value;
-    const number = e.target.elements.number.value;
-    const nanoid = customAlphabet('1234567890', 2);
-    const id = 'id-' + nanoid(2);
-    const contact = { id, name, number };
-    const contactNames = this.getContactNames();
-    this.setState(prevState => {
-      if (!contactNames.includes(contact.name)) {
-        return {
-          contacts: [contact, ...prevState.contacts],
-        };
-      } else {
-        alert(`${contact.name} has already added in contacts`);
-        return { contacts: [...prevState.contacts] };
-      }
-    });
-    this.props.onSubmit(this.state );
+    this.props.onSubmitForm(this.state);
     this.reset();
   };
 
@@ -37,10 +21,10 @@ class ContactForm extends Component {
     this.setState({ name: '', number: '' });
   };
 
-  getContactNames = () => {
-    const { contacts } = this.state;
-    return contacts.map(contact => contact.name);
-  };
+  // getContactNames = () => {
+  //   const { contacts } = this.state;
+  //   return contacts.map(contact => contact.name);
+  // };
 
   render() {
     return (

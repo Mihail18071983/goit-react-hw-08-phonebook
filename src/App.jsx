@@ -1,14 +1,36 @@
 import { Component } from 'react';
 // import { nanoid } from 'nanoid';
-// import { customAlphabet } from 'nanoid';
+import { customAlphabet } from 'nanoid';
 import ContactForm from 'Models/ContactForm/ContactForm';
 
 export class App extends Component {
   state = { contacts: [], filter: '' };
 
-  formSubmitHandler = data => {
-    console.log(data);
+  formSubmitHandler = ({ name, number }) => {
+    console.log(name);
+    console.log(number);
+    const nanoid = customAlphabet('1234567890', 2);
+    const id = 'id-' + nanoid(2);
+    const contact = { id, name, number };
+    const contactNames = this.getContactNames();
+    const isNameExist = contactNames.includes(contact.name);
+    if (isNameExist) alert(`${contact.name} has already added in contacts`);
+    else
+      this.setState(prevState => {
+        return { contacts: [contact, ...prevState.contacts] };
+      });
+    //    this.setState(prevState => {
+    //   if (!contactNames.includes(contact.name)) {
+    //     return {
+    //       contacts: [contact, ...prevState.contacts],
+    //     };
+    //   } else {
+    //     alert(`${contact.name} has already added in contacts`);
+    //     return { contacts: [...prevState.contacts] };
+    //   }
+    // });
   };
+
   // handleSubmit = e => {
   //   e.preventDefault();
   //   const name = e.target.elements.name.value;
@@ -33,10 +55,10 @@ export class App extends Component {
   //   this.setState ={ name: '', number: ''}
   // }
 
-  // getContactNames = () => {
-  //   const { contacts } = this.state;
-  //   return contacts.map(contact => contact.name);
-  // };
+  getContactNames = () => {
+    const { contacts } = this.state;
+    return contacts.map(contact => contact.name);
+  };
 
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
@@ -63,7 +85,7 @@ export class App extends Component {
     return (
       <>
         <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.formSubmitHandler} />
+        <ContactForm onSubmitForm={this.formSubmitHandler} />
         {/* <form onSubmit={this.handleSubmit}>
           <label>
             Name
