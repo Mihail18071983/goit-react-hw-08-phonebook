@@ -1,39 +1,42 @@
 import { Component } from 'react';
 // import { nanoid } from 'nanoid';
-import { customAlphabet } from 'nanoid';
+// import { customAlphabet } from 'nanoid';
+import ContactForm from 'Models/ContactForm/ContactForm';
 
 export class App extends Component {
-  state = { contacts: [], name: '', number: '', filter: '' };
+  state = { contacts: [], filter: '' };
 
-  handleSubmit = e => {
-    e.preventDefault();
-    const name = e.target.elements.name.value;
-    const number = e.target.elements.number.value;
-    const nanoid = customAlphabet('1234567890', 2);
-    const id = 'id-' + nanoid(2);
-    const contact = { id, name, number };
-    const contactNames = this.getContactNames();
-    this.setState(prevState => {
-      if (!contactNames.includes(contact.name)) {
-        return {
-          contacts: [contact, ...prevState.contacts],
-        };
-      } else {
-        alert(`${contact.name} has already added in contacts`);
-        return { contacts: [...prevState.contacts] };
-      }
-    });
-    
+  formSubmitHandler = data => {
+    console.log(data);
   };
+  // handleSubmit = e => {
+  //   e.preventDefault();
+  //   const name = e.target.elements.name.value;
+  //   const number = e.target.elements.number.value;
+  //   const nanoid = customAlphabet('1234567890', 2);
+  //   const id = 'id-' + nanoid(2);
+  //   const contact = { id, name, number };
+  //   const contactNames = this.getContactNames();
+  //   this.setState(prevState => {
+  //     if (!contactNames.includes(contact.name)) {
+  //       return {
+  //         contacts: [contact, ...prevState.contacts],
+  //       };
+  //     } else {
+  //       alert(`${contact.name} has already added in contacts`);
+  //       return { contacts: [...prevState.contacts] };
+  //     }
+  //   });
+  // };
 
-  reset=()=> {
-    this.setState ={ name: '', number: ''}
-  }
+  // reset=()=> {
+  //   this.setState ={ name: '', number: ''}
+  // }
 
-  getContactNames = () => {
-    const { contacts } = this.state;
-    return contacts.map(contact => contact.name);
-  };
+  // getContactNames = () => {
+  //   const { contacts } = this.state;
+  //   return contacts.map(contact => contact.name);
+  // };
 
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
@@ -60,7 +63,8 @@ export class App extends Component {
     return (
       <>
         <h1>Phonebook</h1>
-        <form onSubmit={this.handleSubmit}>
+        <ContactForm onSubmit={this.formSubmitHandler} />
+        {/* <form onSubmit={this.handleSubmit}>
           <label>
             Name
             <input
@@ -82,7 +86,7 @@ export class App extends Component {
             />
           </label>
           <button type="submit">Add contact</button>
-        </form>
+        </form> */}
         <div>
           <h2>Contacts</h2>
           <label>

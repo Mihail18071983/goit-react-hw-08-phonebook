@@ -1,0 +1,78 @@
+import { Component } from 'react';
+import { customAlphabet } from 'nanoid';
+
+class ContactForm extends Component {
+  state = { contacts: [], name: '', number: '' };
+
+  handleChange = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const name = e.target.elements.name.value;
+    const number = e.target.elements.number.value;
+    const nanoid = customAlphabet('1234567890', 2);
+    const id = 'id-' + nanoid(2);
+    const contact = { id, name, number };
+    const contactNames = this.getContactNames();
+    this.setState(prevState => {
+      if (!contactNames.includes(contact.name)) {
+        return {
+          contacts: [contact, ...prevState.contacts],
+        };
+      } else {
+        alert(`${contact.name} has already added in contacts`);
+        return { contacts: [...prevState.contacts] };
+      }
+    });
+    this.props.onSubmit(this.state );
+    this.reset();
+  };
+
+  reset = () => {
+    this.setState({ name: '', number: '' });
+  };
+
+  getContactNames = () => {
+    const { contacts } = this.state;
+    return contacts.map(contact => contact.name);
+  };
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name
+          <input
+            type="text"
+            name="name"
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            value={this.state.name}
+            onChange={this.handleChange}
+          />
+        </label>
+        <label>
+          Number
+          <input
+            type="tel"
+            name="number"
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+            value={this.state.number}
+            onChange={this.handleChange}
+          />
+        </label>
+        <button type="submit">Add contact</button>
+      </form>
+    );
+  }
+}
+
+export default ContactForm;
