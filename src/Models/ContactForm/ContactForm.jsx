@@ -2,7 +2,7 @@ import { Component } from 'react';
 
 
 class ContactForm extends Component {
-  state = { contacts: [], name: '', number: '' };
+  state = {name: '', number: '' };
 
   handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -20,11 +20,6 @@ class ContactForm extends Component {
   reset = () => {
     this.setState({ name: '', number: '' });
   };
-
-  // getContactNames = () => {
-  //   const { contacts } = this.state;
-  //   return contacts.map(contact => contact.name);
-  // };
 
   render() {
     return (
