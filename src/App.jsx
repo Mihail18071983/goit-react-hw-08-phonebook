@@ -2,6 +2,7 @@ import { Component } from 'react';
 // import { nanoid } from 'nanoid';
 import { customAlphabet } from 'nanoid';
 import ContactForm from 'Models/ContactForm/ContactForm';
+import Filter from 'shared/components/Filter';
 
 export class App extends Component {
   state = { contacts: [], filter: '' };
@@ -53,10 +54,8 @@ export class App extends Component {
         <ContactForm onSubmitForm={this.formSubmitHandler} />
         <div>
           <h2>Contacts</h2>
-          <label>
-            Find contacts by name
-            <input type="text" value={filter} onChange={this.changeFilter} />
-          </label>
+
+          <Filter value={filter} onChange={this.changeFilter } />
 
           <ul>
             {visibleContacts.map(({ id, name, number }) => {
