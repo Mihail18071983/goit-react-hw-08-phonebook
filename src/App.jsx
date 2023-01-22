@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { customAlphabet } from 'nanoid';
 import ContactForm from 'Models/ContactForm/ContactForm';
 import Filter from 'shared/components/Filter';
+import ContactList from 'shared/components/ContactList';
 
 export class App extends Component {
   state = { contacts: [], filter: '' };
@@ -19,7 +20,6 @@ export class App extends Component {
         return { contacts: [contact, ...prevState.contacts] };
       });
   };
-
 
   getContactNames = () => {
     const { contacts } = this.state;
@@ -55,21 +55,12 @@ export class App extends Component {
         <div>
           <h2>Contacts</h2>
 
-          <Filter value={filter} onChange={this.changeFilter } />
+          <Filter value={filter} onChange={this.changeFilter} />
 
-          <ul>
-            {visibleContacts.map(({ id, name, number }) => {
-              return (
-                <li key={id}>
-                  <span>{name}:</span>
-                  <span>{number}</span>
-                  <button type="button" onClick={() => this.deleteContact(id)}>
-                    delete
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+          <ContactList
+            visibleContacts={visibleContacts}
+            onDeleteContact={this.deleteContact}
+          />
         </div>
       </>
     );
