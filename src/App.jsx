@@ -1,5 +1,4 @@
 import { Component } from 'react';
-// import { nanoid } from 'nanoid';
 import { customAlphabet } from 'nanoid';
 import ContactForm from 'Models/ContactForm/ContactForm';
 import Filter from 'shared/components/Filter';
