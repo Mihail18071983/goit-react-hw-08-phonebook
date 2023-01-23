@@ -49,7 +49,7 @@ class ContactForm extends Component {
             onChange={this.handleChange}
           />
         </label>
-        <StyledBtn onClick={this.handleSubmit} type="submit">Add contact</StyledBtn>
+        <StyledBtn type="submit">Add contact</StyledBtn>
       </form>
     );
   }
