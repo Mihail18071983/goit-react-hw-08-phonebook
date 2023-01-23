@@ -1,8 +1,11 @@
 import { Component } from 'react';
 import { customAlphabet } from 'nanoid';
 import ContactForm from 'Models/ContactForm/ContactForm';
-import Filter from 'shared/components/Filter';
-import ContactList from 'shared/components/ContactList';
+import Filter from 'shared/components/Filter/Filter';
+import ContactList from 'shared/components/ContactList/ContactList';
+import StyledBookTitle from 'shared/components/PhoneBookTitle.styled';
+import ContactTitle from 'shared/components/ContactTitle.styled';
+import ContactContainer from 'shared/components/Contact/СontactsContainer.styled';
 
 export class App extends Component {
   state = { contacts: [], filter: '' };
@@ -49,18 +52,16 @@ export class App extends Component {
     const visibleContacts = this.getVisibleContacts();
     return (
       <>
-        <h1>Phonebook</h1>
+        <StyledBookTitle>Phonebook</StyledBookTitle>
         <ContactForm onSubmitForm={this.formSubmitHandler} />
-        <div>
-          <h2>Contacts</h2>
-
+        <ContactContainer>
+          <ContactTitle>Contacts</ContactTitle>
           <Filter value={filter} onChange={this.changeFilter} />
-
           <ContactList
             visibleContacts={visibleContacts}
             onDeleteContact={this.deleteContact}
           />
-        </div>
+        </ContactContainer>
       </>
     );
   }

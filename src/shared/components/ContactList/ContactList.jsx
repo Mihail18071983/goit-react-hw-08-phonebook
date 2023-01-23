@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Contact from './Contact/Contact';
+import Contact from '../Contact/Contact';
+import ContactListStyled from './ContactList.styled';
 
 const ContactList = ({ visibleContacts, onDeleteContact }) => (
-  <ul>
+  <ContactListStyled>
     {visibleContacts.map(({ id, name, number }) => {
       return (
         <Contact
@@ -14,7 +15,7 @@ const ContactList = ({ visibleContacts, onDeleteContact }) => (
         />
       );
     })}
-  </ul>
+  </ContactListStyled>
 );
 
 export default ContactList;

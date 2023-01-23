@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import StyledBtn from 'shared/components/Button/Button.styled';
+import StyledContactForm from './ContactForm.styled';
+import StyledLabel from './label.styled';
 
 class ContactForm extends Component {
   state = {name: '', number: '' };
@@ -24,8 +26,8 @@ class ContactForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
+      <StyledContactForm onSubmit={this.handleSubmit}>
+        <StyledLabel >
           Name
           <input
             type="text"
@@ -36,8 +38,8 @@ class ContactForm extends Component {
             value={this.state.name}
             onChange={this.handleChange}
           />
-        </label>
-        <label>
+        </StyledLabel >
+        <StyledLabel >
           Number
           <input
             type="tel"
@@ -48,9 +50,9 @@ class ContactForm extends Component {
             value={this.state.number}
             onChange={this.handleChange}
           />
-        </label>
+        </StyledLabel >
         <StyledBtn type="submit">Add contact</StyledBtn>
-      </form>
+      </StyledContactForm>
     );
   }
 }

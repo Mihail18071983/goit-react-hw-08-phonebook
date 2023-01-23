@@ -9,7 +9,7 @@ const StyledBtn = styled.button`
     type === 'submit' ? '#0000ff' : 'transparent'};
   border-radius: 5px;
   padding: 5px 10px;
-
+  max-width: 100px;
   transition: background-color 5s cubic-bezier();
 
   &:hover {
