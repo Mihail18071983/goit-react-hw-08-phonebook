@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import StyledBtn from 'shared/components/Button/Button.styled';
 
 class ContactForm extends Component {
   state = {name: '', number: '' };
@@ -48,7 +49,7 @@ class ContactForm extends Component {
             onChange={this.handleChange}
           />
         </label>
-        <button type="submit">Add contact</button>
+        <StyledBtn onClick={this.handleSubmit} type="submit">Add contact</StyledBtn>
       </form>
     );
   }
@@ -57,5 +58,5 @@ class ContactForm extends Component {
 export default ContactForm;
 
 ContactForm.propTypes = {
-  onSubmit:PropTypes.func.isRequired
+  onSubmit:PropTypes.func
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Contact from './Contact';
+import Contact from './Contact/Contact';
 
 const ContactList = ({ visibleContacts, onDeleteContact }) => (
   <ul>
