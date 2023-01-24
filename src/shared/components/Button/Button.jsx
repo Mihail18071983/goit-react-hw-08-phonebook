@@ -15,4 +15,5 @@ export default Button
 
 Button.propTypes = {
     type: PropTypes.oneOf(['submit', 'button', 'reset']),
+    children:PropTypes.element.isRequired
 }
