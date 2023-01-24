@@ -5,7 +5,7 @@ import StyledContactForm from './ContactForm.styled';
 import StyledLabel from './label.styled';
 
 class ContactForm extends Component {
-  state = {name: '', number: '' };
+  state = { name: '', number: '' };
 
   handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -16,8 +16,11 @@ class ContactForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmitForm(this.state);
-    this.reset();
+    const { onSubmit } = this.props;
+    const result = onSubmit({ ...this.state });
+    if (result) {
+      this.reset();
+    }
   };
 
   reset = () => {
@@ -27,7 +30,7 @@ class ContactForm extends Component {
   render() {
     return (
       <StyledContactForm onSubmit={this.handleSubmit}>
-        <StyledLabel >
+        <StyledLabel>
           Name
           <input
             type="text"
@@ -38,8 +41,8 @@ class ContactForm extends Component {
             value={this.state.name}
             onChange={this.handleChange}
           />
-        </StyledLabel >
-        <StyledLabel >
+        </StyledLabel>
+        <StyledLabel>
           Number
           <input
             type="tel"
@@ -50,7 +53,7 @@ class ContactForm extends Component {
             value={this.state.number}
             onChange={this.handleChange}
           />
-        </StyledLabel >
+        </StyledLabel>
         <StyledBtn type="submit">Add contact</StyledBtn>
       </StyledContactForm>
     );
@@ -60,5 +63,5 @@ class ContactForm extends Component {
 export default ContactForm;
 
 ContactForm.propTypes = {
-  onSubmit:PropTypes.func
-}
+  onSubmit: PropTypes.func.isRequired,
+};

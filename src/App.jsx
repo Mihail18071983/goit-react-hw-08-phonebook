@@ -8,25 +8,35 @@ import ContactTitle from 'shared/components/ContactTitle.styled';
 import ContactContainer from 'shared/components/Contact/СontactsContainer.styled';
 
 export class App extends Component {
-  state = { contacts: [], filter: '' };
+  state = {
+    contacts: [],
+    filter: '',
+  };
 
   formSubmitHandler = ({ name, number }) => {
     const nanoid = customAlphabet('1234567890', 2);
     const id = 'id-' + nanoid(2);
     const contact = { id, name, number };
-    const contactNames = this.getContactNames();
-    const isNameExist = contactNames.includes(contact.name);
-    if (isNameExist) alert(`${contact.name} has already added in contacts`);
-    else
-      this.setState(prevState => {
-        return { contacts: [contact, ...prevState.contacts] };
-      });
+    if (this.isNameExist(name)) {
+      alert(`${contact.name} has already added in contacts`);
+      return false;
+    }
+
+    this.setState(prevState => {
+      return { contacts: [contact, ...prevState.contacts] };
+    });
+    return true;
   };
 
-  getContactNames = () => {
+  isNameExist(contName) {
+    const normalizedName = contName.toLowerCase();
     const { contacts } = this.state;
-    return contacts.map(contact => contact.name);
-  };
+    const result = contacts.find(({ name }) => {
+      return name.toLowerCase() === normalizedName;
+    });
+
+    return Boolean(result);
+  }
 
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
@@ -34,9 +44,14 @@ export class App extends Component {
 
   getVisibleContacts = () => {
     const { contacts, filter } = this.state;
+    if (!filter) {
+      return contacts;
+    }
     const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
+    return contacts.filter(
+      ({ name, number }) =>
+        name.toLowerCase().includes(normalizedFilter) ||
+        number.includes(normalizedFilter)
     );
   };
 
@@ -47,20 +62,24 @@ export class App extends Component {
   };
 
   render() {
-    const { filter } = this.state;
-
+    const { filter, contacts } = this.state;
+    const isContact = Boolean(contacts.length);
     const visibleContacts = this.getVisibleContacts();
+
     return (
       <>
         <StyledBookTitle>Phonebook</StyledBookTitle>
-        <ContactForm onSubmitForm={this.formSubmitHandler} />
+        <ContactForm onSubmit={this.formSubmitHandler} />
         <ContactContainer>
           <ContactTitle>Contacts</ContactTitle>
           <Filter value={filter} onChange={this.changeFilter} />
-          <ContactList
-            visibleContacts={visibleContacts}
-            onDeleteContact={this.deleteContact}
-          />
+          {isContact && (
+            <ContactList
+              visibleContacts={visibleContacts}
+              onDeleteContact={this.deleteContact}
+            />
+          )}
+          {!isContact && <p>No contact in phonebook</p>}
         </ContactContainer>
       </>
     );

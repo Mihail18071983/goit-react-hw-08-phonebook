@@ -11,7 +11,7 @@ const ContactList = ({ visibleContacts, onDeleteContact }) => (
           name={name}
           key={id}
           number={number}
-          onDeleteContact={()=>onDeleteContact(id)}
+          onDeleteContact={() => onDeleteContact(id)}
         />
       );
     })}
@@ -20,7 +20,17 @@ const ContactList = ({ visibleContacts, onDeleteContact }) => (
 
 export default ContactList;
 
+ContactList.defaultProps = {
+    visibleContacts: []
+}
+
 ContactList.propTypes = {
   onDeleteContact: PropTypes.func.isRequired,
-  visibleContacts: PropTypes.arrayOf(PropTypes.object),
+  visibleContacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ),
 };
