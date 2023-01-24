@@ -1,11 +1,11 @@
 import { Component } from 'react';
 import { customAlphabet } from 'nanoid';
-import ContactForm from 'Models/ContactForm/ContactForm';
-import Filter from 'Models/Filter/Filter';
-import ContactList from 'Models/ContactList/ContactList';
-import StyledBookTitle from 'Models/Contact/PhoneBookTitle.styled';
-import ContactTitle from 'Models/Contact/ContactTitle.styled';
-import ContactContainer from 'Models/Contact/СontactsContainer.styled';
+import ContactForm from 'modules/ContactForm/ContactForm';
+import Filter from 'modules/Filter/Filter';
+import ContactList from 'modules/ContactList/ContactList';
+import StyledBookTitle from 'modules/Contact/PhoneBookTitle.styled';
+import ContactTitle from 'modules/Contact/ContactTitle.styled';
+import ContactContainer from 'modules/Contact/СontactsContainer.styled';
 
 import initContacts from 'data/contacts';
 
