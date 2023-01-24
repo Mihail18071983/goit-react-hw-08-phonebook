@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import StyledBtn from '../Button/Button.styled';
+import StyledBtn from '../../shared/components/Button/Button.styled';
 import StyledContact from './Contact.styled';
 
 const Contact = ({ name, number, id, onDeleteContact }) => (

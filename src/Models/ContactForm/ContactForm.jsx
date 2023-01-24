@@ -1,11 +1,13 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import inititalState from './initialState';
 import StyledBtn from 'shared/components/Button/Button.styled';
 import StyledContactForm from './ContactForm.styled';
 import StyledLabel from './label.styled';
 
+
 class ContactForm extends Component {
-  state = { name: '', number: '' };
+  state = { ...inititalState };
 
   handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -24,7 +26,7 @@ class ContactForm extends Component {
   };
 
   reset = () => {
-    this.setState({ name: '', number: '' });
+    this.setState({ ...inititalState});
   };
 
   render() {

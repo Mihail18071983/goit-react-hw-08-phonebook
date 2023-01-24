@@ -1,15 +1,17 @@
 import { Component } from 'react';
 import { customAlphabet } from 'nanoid';
 import ContactForm from 'Models/ContactForm/ContactForm';
-import Filter from 'shared/components/Filter/Filter';
-import ContactList from 'shared/components/ContactList/ContactList';
-import StyledBookTitle from 'shared/components/PhoneBookTitle.styled';
-import ContactTitle from 'shared/components/ContactTitle.styled';
-import ContactContainer from 'shared/components/Contact/СontactsContainer.styled';
+import Filter from 'Models/Filter/Filter';
+import ContactList from 'Models/ContactList/ContactList';
+import StyledBookTitle from 'Models/Contact/PhoneBookTitle.styled';
+import ContactTitle from 'Models/Contact/ContactTitle.styled';
+import ContactContainer from 'Models/Contact/СontactsContainer.styled';
+
+import initContacts from 'data/contacts';
 
 export class App extends Component {
   state = {
-    contacts: [],
+    contacts: [...initContacts],
     filter: '',
   };
 
