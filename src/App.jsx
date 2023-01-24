@@ -44,7 +44,7 @@ export class App extends Component {
     this.setState({ filter: e.currentTarget.value });
   };
 
-  getVisibleContacts = () => {
+  getVisibleContacts  ()  {
     const { contacts, filter } = this.state;
     if (!filter) {
       return contacts;
