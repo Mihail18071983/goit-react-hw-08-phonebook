@@ -11,9 +11,23 @@ import initContacts from 'data/contacts';
 
 export class App extends Component {
   state = {
-    contacts: [...initContacts],
+    contacts: [],
     filter: '',
   };
+
+    componentDidMount() {
+        const contacts = JSON.parse(localStorage.getItem("contacts"));
+        if(contacts?.length) { 
+            this.setState({contacts})
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        const {contacts} = this.state;
+        if(prevState.contacts.length !== contacts.length) {
+            localStorage.setItem("contacts", JSON.stringify(contacts));
+        }
+    }
 
   formSubmitHandler = ({ name, number }) => {
     const nanoid = customAlphabet('1234567890', 2);
