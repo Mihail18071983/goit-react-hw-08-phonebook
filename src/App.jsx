@@ -7,7 +7,6 @@ import StyledBookTitle from 'modules/Contact/PhoneBookTitle.styled';
 import ContactTitle from 'modules/Contact/ContactTitle.styled';
 import ContactContainer from 'modules/Contact/СontactsContainer.styled';
 
-import initContacts from 'data/contacts';
 
 export class App extends Component {
   state = {
