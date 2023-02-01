@@ -24,8 +24,6 @@ const ContactForm = ({ onSubmit }) => {
     if (result) {
       setState({ ...inititalState });
     }
-    // onSubmit({ name, number });
-    // setState(...inititalState);
   };
 
   const { name, number } = state;
