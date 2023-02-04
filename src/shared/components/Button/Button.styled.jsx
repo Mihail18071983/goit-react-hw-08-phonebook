@@ -10,7 +10,7 @@ const StyledBtn = styled.button`
   border-radius: 5px;
   padding: 5px 10px;
   max-width: 100px;
-  transition: background-color 5s cubic-bezier();
+  transition: background-color .25s cubic-bezier(.05,.97,1,.08), color .25s cubic-bezier(.05,.97,1,.08);
 
   &:hover {
     background-color:${({ type }) =>
