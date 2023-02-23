@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
@@ -9,11 +9,12 @@ import StyledBookTitle from 'modules/Contact/PhoneBookTitle.styled';
 import ContactTitle from 'modules/Contact/ContactTitle.styled';
 import ContactContainer from 'modules/Contact/СontactsContainer.styled';
 
-import { addContact, deleteContact } from 'redux/actions';
+import { addContact, deleteContact, setFilter } from 'redux/actions';
 
 function App() {
   const contacts = useSelector(store => store.contacts);
-  const [filter, setFilter] = useState('');
+  // const [filter, setFilter] = useState('');
+  const filter=useSelector(store=>store.filter)
 
   const dispatch = useDispatch();
 
@@ -37,20 +38,20 @@ function App() {
   };
 
   const changeFilter = e => {
-    setFilter(e.currentTarget.value);
+    dispatch(setFilter(e.currentTarget.value))
   };
 
-  // const getVisibleContacts = () => {
-  //   if (!filter) {
-  //     return contacts;
-  //   }
-  //   const normalizedFilter = filter.toLowerCase();
-  //   return contacts.filter(
-  //     ({ name, number }) =>
-  //       name.toLowerCase().includes(normalizedFilter) ||
-  //       number.includes(normalizedFilter)
-  //   );
-  // };
+  const getVisibleContacts = () => {
+    if (!filter) {
+      return contacts;
+    }
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(
+      ({ name, number }) =>
+        name.toLowerCase().includes(normalizedFilter) ||
+        number.includes(normalizedFilter)
+    );
+  };
 
   const handleDeleteContact = contactID => {
     const action = deleteContact(contactID);
@@ -58,7 +59,7 @@ function App() {
   };
 
   const isContact = Boolean(contacts.length);
-  const visibleContacts = contacts;
+  const visibleContacts = getVisibleContacts();
   console.log(visibleContacts)
 
   return (
