@@ -10,17 +10,17 @@ import ContactTitle from 'modules/Contact/ContactTitle.styled';
 import ContactContainer from 'modules/Contact/СontactsContainer.styled';
 
 import { addContact, deleteContact, setFilter } from 'redux/actions';
+import { getFilteredContacts, getFilter,  } from 'redux/selectors';
 
 function App() {
-  const contacts = useSelector(store => store.contacts);
-  // const [filter, setFilter] = useState('');
-  const filter=useSelector(store=>store.filter)
+  const filteredContacts = useSelector(getFilteredContacts);
+  const filter = useSelector(getFilter);
 
   const dispatch = useDispatch();
 
     const isNameExist = contName => {
     const normalizedName = contName.toLowerCase();
-    const result = contacts.find(({ name }) => {
+    const result =filteredContacts.find(({ name }) => {
       return name.toLowerCase() === normalizedName;
     });
     return Boolean(result);
@@ -41,26 +41,14 @@ function App() {
     dispatch(setFilter(e.currentTarget.value))
   };
 
-  const getVisibleContacts = () => {
-    if (!filter) {
-      return contacts;
-    }
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(
-      ({ name, number }) =>
-        name.toLowerCase().includes(normalizedFilter) ||
-        number.includes(normalizedFilter)
-    );
-  };
 
   const handleDeleteContact = contactID => {
     const action = deleteContact(contactID);
     dispatch(action);
   };
 
-  const isContact = Boolean(contacts.length);
-  const visibleContacts = getVisibleContacts();
-  console.log(visibleContacts)
+  const isContact = Boolean(filteredContacts.length);
+  
 
   return (
     <>
@@ -71,7 +59,7 @@ function App() {
         <Filter value={filter} onChange={changeFilter} />
         {isContact && (
           <ContactList
-            visibleContacts={visibleContacts}
+            visibleContacts={filteredContacts}
             onDeleteContact={handleDeleteContact}
           />
         )}
