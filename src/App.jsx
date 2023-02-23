@@ -12,42 +12,28 @@ import ContactContainer from 'modules/Contact/СontactsContainer.styled';
 import { addContact, deleteContact } from 'redux/actions';
 
 function App() {
-  // const [contacts, setContacts] = useState(() => {
-  //   const contacts = JSON.parse(localStorage.getItem("contacts"));
-  //       return contacts ? contacts : [];
-  // });
   const contacts = useSelector(store => store.contacts);
   const [filter, setFilter] = useState('');
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   localStorage.setItem('contacts', JSON.stringify(contacts));
-  // }, [contacts]);
-  //   const isNameExist = contName => {
-  //   const normalizedName = contName.toLowerCase();
-  //   const result = contacts.find(({ name }) => {
-  //     return name.toLowerCase() === normalizedName;
-  //   });
-  //   return Boolean(result);
-  // };
+    const isNameExist = contName => {
+    const normalizedName = contName.toLowerCase();
+    const result = contacts.find(({ name }) => {
+      return name.toLowerCase() === normalizedName;
+    });
+    return Boolean(result);
+  };
 
   const handleAddContact = ({ name, number }) => {
-    // const nanoid = customAlphabet('1234567890', 2);
-    // const id = 'id-' + nanoid(2);
-    // const contact = { name, number };
-    // if (isNameExist(name)) {
-    //   alert(`${contact.name} has already added in contacts`);
-    //   return false;
-    // }
+    if (isNameExist(name)) {
+      alert(`${name} has already added in contacts`);
+      return false;
+    }
 
     const action = addContact({ name, number });
-    console.log(action);
     dispatch(action);
-    // setContacts(prevContacts => {
-    //   return [contact, ...prevContacts] ;
-    // });
-    // return true;
+    return true;
   };
 
   const changeFilter = e => {
@@ -66,10 +52,10 @@ function App() {
   //   );
   // };
 
-  // const deleteContact = contactID => {
-  //   setContacts(prevState => (
-  //      prevState.filter(contact => contact.id !== contactID)));
-  // };
+  const handleDeleteContact = contactID => {
+    const action = deleteContact(contactID);
+    dispatch(action);
+  };
 
   const isContact = Boolean(contacts.length);
   const visibleContacts = contacts;
@@ -85,7 +71,7 @@ function App() {
         {isContact && (
           <ContactList
             visibleContacts={visibleContacts}
-            onDeleteContact={deleteContact}
+            onDeleteContact={handleDeleteContact}
           />
         )}
         {!isContact && <p>No contact in phonebook</p>}
