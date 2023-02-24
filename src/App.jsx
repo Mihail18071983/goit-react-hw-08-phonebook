@@ -9,8 +9,8 @@ import StyledBookTitle from 'modules/Contact/PhoneBookTitle.styled';
 import ContactTitle from 'modules/Contact/ContactTitle.styled';
 import ContactContainer from 'modules/Contact/СontactsContainer.styled';
 
-import { addContact, deleteContact } from './redux/contacts/contacts-actions';
-import { setFilter } from 'redux/filter/filter-actions';
+import { addContact, deleteContact } from './redux/contacts/contacts-slice';
+import { setFilter } from 'redux/filter/filter-slice';
 import { getFilteredContacts } from 'redux/contacts/contacts-selectors';
 import { getFilter } from 'redux/filter/filter-selectors';
 
