@@ -1,20 +1,17 @@
-import { customAlphabet } from 'nanoid';
+import { createAction } from '@reduxjs/toolkit';
 
-import { ADD_CONTACT, DELETE_CONTACT } from './contacts-types';
+import { customAlphabet } from 'nanoid';
 
 const nanoid = customAlphabet('1234567890', 2);
 
-
-export const addContact = payload => {
+export const addContact = createAction('contacts/add', data => {
   return {
-    type: ADD_CONTACT,
     payload: {
+      ...data,
       id:'id-'+nanoid(),
-      ...payload,
-    },
-  };
-};
+    }
+  }
+})
 
-export const deleteContact = payload => {
-  return { type: DELETE_CONTACT, payload };
-};
+
+export const deleteContact = createAction('contacts/delete');

@@ -1,7 +1,15 @@
-import { createStore } from "redux";
+import { configureStore } from '@reduxjs/toolkit';
 
-import rootReducer from "./rootReducer";
+import { persistStore } from 'redux-persist';
 
-const store = createStore(rootReducer,  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() );
+// import filterReducer from './filter/filter-reducer';
+// import contactReducer from './contacts/contacts-reducer';
 
-export default store;
+import persistedReducer from './rootReducer';
+
+export const store = configureStore({
+  reducer: persistedReducer,
+});
+
+export const persistor = persistStore(store)
+
