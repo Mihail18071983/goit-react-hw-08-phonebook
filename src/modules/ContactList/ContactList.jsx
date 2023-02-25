@@ -3,7 +3,19 @@ import PropTypes from 'prop-types';
 import Contact from '../Contact/Contact';
 import ContactListStyled from './ContactList.styled';
 
-const ContactList = ({ onDeleteContact, visibleContacts }) => {
+import { getAllContacts } from 'redux/contacts/contacts-selectors';
+
+import { useSelector } from 'react-redux';
+
+import { useDispatch } from 'react-redux';
+
+import { deleteContact } from 'redux/contacts/contacts-slice';
+
+
+
+const ContactList = () => {
+  const dispatch = useDispatch();
+  const visibleContacts = useSelector(getAllContacts);
   return (
     <ContactListStyled>
       {visibleContacts.map(({ id, name, number }) => {
@@ -12,7 +24,7 @@ const ContactList = ({ onDeleteContact, visibleContacts }) => {
             name={name}
             key={id}
             number={number}
-            onDeleteContact={() => onDeleteContact(id)}
+            onDeleteContact={()=>dispatch(deleteContact(id))}
           />
         );
       })}
@@ -27,7 +39,6 @@ ContactList.defaultProps = {
 };
 
 ContactList.propTypes = {
-  onDeleteContact: PropTypes.func.isRequired,
   visibleContacts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
