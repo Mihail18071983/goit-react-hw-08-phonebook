@@ -10,8 +10,6 @@ import {
   REGISTER,
 } from 'redux-persist';
 
-// import filterReducer from './filter/filter-reducer';
-// import contactReducer from './contacts/contacts-reducer';
 
 import persistedReducer from './rootReducer';
 
