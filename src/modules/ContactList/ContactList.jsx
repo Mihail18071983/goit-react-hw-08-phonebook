@@ -12,7 +12,7 @@ const ContactList = () => {
   return (
     <ContactListStyled>
       {visibleContacts.map(({ id, name, number }) => {
-        return <Contact name={name} key={id} number={number} />;
+        return <Contact name={name} key={id} number={number} id={id} />;
       })}
     </ContactListStyled>
   );
