@@ -8,8 +8,9 @@ const StyledContact = styled.li`
   }
   display: flex;
   justify-content: space-between;
+  gap:20px;
   align-items: center;
-  max-width: 400px;
+  max-width: 1200px;
 `;
 
 export default StyledContact
