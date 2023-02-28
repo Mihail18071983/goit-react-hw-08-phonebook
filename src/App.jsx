@@ -53,10 +53,6 @@ useEffect(() => {
   };
 
 
-  // const handleDeleteContact = contactID => {
-  //   const action = deleteContact(contactID);
-  //   dispatch(action);
-  // };
 
   const isContact = Boolean(filteredContacts.length);
   
@@ -70,7 +66,6 @@ useEffect(() => {
         <Filter value={filter} onChange={changeFilter} />
         {isContact && (
           <ContactList
-            // onDeleteContact={handleDeleteContact}
           />
         )}
         {!isContact && <p>No contact in phonebook</p>}
