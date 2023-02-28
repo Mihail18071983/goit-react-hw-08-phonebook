@@ -1,8 +1,8 @@
-export const getAllContacts = store => store.contacts;
+export const getAllContacts = store => store.contacts.items;
 
 export const getFilteredContacts = ({ contacts, filter } ) => {
     if (!filter) {
-      return contacts;
+      return contacts.items;
     }
     const normalizedFilter = filter.toLowerCase();
     return contacts.filter(
@@ -11,3 +11,7 @@ export const getFilteredContacts = ({ contacts, filter } ) => {
         number.includes(normalizedFilter)
     );
 }
+
+export const getIsLoading = state => state.contacts.isLoading;
+
+export const getError = state => state.contacts.error;

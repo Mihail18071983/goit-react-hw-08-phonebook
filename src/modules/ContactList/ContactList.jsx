@@ -3,30 +3,16 @@ import PropTypes from 'prop-types';
 import Contact from '../Contact/Contact';
 import ContactListStyled from './ContactList.styled';
 
-import { getAllContacts } from 'redux/contacts/contacts-selectors';
+import { getFilteredContacts } from 'redux/contacts/contacts-selectors';
 
 import { useSelector } from 'react-redux';
 
-import { useDispatch } from 'react-redux';
-
-import { deleteContact } from 'redux/contacts/contacts-slice';
-
-
-
 const ContactList = () => {
-  const dispatch = useDispatch();
-  const visibleContacts = useSelector(getAllContacts);
+  const visibleContacts = useSelector(getFilteredContacts);
   return (
     <ContactListStyled>
       {visibleContacts.map(({ id, name, number }) => {
-        return (
-          <Contact
-            name={name}
-            key={id}
-            number={number}
-            onDeleteContact={()=>dispatch(deleteContact(id))}
-          />
-        );
+        return <Contact name={name} key={id} number={number} />;
       })}
     </ContactListStyled>
   );

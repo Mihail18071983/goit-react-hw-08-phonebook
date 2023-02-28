@@ -1,6 +1,7 @@
 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 import ContactForm from 'modules/ContactForm/ContactForm';
 import Filter from 'modules/Filter/Filter';
@@ -9,16 +10,24 @@ import StyledBookTitle from 'modules/Contact/PhoneBookTitle.styled';
 import ContactTitle from 'modules/Contact/ContactTitle.styled';
 import ContactContainer from 'modules/Contact/СontactsContainer.styled';
 
-import { addContact } from './redux/contacts/contacts-slice';
+import { addContact, fetchContacts } from 'redux/operations';
 import { setFilter } from 'redux/filter/filter-slice';
-import { getFilteredContacts } from 'redux/contacts/contacts-selectors';
+import { getFilteredContacts} from 'redux/contacts/contacts-selectors';
+// import {getIsLoading, getError } from 'redux/contacts/contacts-selectors';
 import { getFilter } from 'redux/filter/filter-selectors';
 
 function App() {
   const filteredContacts = useSelector(getFilteredContacts);
+  console.log('filtered contacts',filteredContacts)
+  // const isLoading = useSelector(getIsLoading)
+  // const error=useSelector(getError)
   const filter = useSelector(getFilter);
-
   const dispatch = useDispatch();
+
+useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
 
     const isNameExist = contName => {
     const normalizedName = contName.toLowerCase();
