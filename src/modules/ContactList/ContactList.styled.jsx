@@ -4,7 +4,7 @@ const ContactListStyled = styled.ul`
   margin: 0;
   padding: 0;
   list-style: none;
-  max-width:300px
+  max-width:400px;
 `;
 
 export default ContactListStyled;

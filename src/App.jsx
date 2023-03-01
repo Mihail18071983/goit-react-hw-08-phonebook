@@ -54,7 +54,7 @@ function App() {
   const isContact = Boolean(filteredContacts.length);
 
   return (
-    <>
+    <div style={{paddingTop:30, paddingBottom:30}}>
       <StyledBookTitle>Phonebook</StyledBookTitle>
       <ContactForm onSubmit={handleAddContact} />
       {!isError && (
@@ -70,7 +70,7 @@ function App() {
           Ops, Something goes wrong{' '}
         </p>
       )}
-    </>
+    </div>
   );
 }
 
