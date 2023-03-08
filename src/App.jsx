@@ -1,77 +1,32 @@
-import { Notify } from 'notiflix';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 
-import ContactForm from 'modules/ContactForm/ContactForm';
-import Filter from 'modules/Filter/Filter';
-import ContactList from 'modules/ContactList/ContactList';
-import StyledBookTitle from 'modules/Contact/PhoneBookTitle.styled';
-import ContactTitle from 'modules/Contact/ContactTitle.styled';
-import ContactContainer from 'modules/Contact/СontactsContainer.styled';
+import SharedLayout from 'shared/SharedLayout/SharedLayout';
 
-import { addContact, fetchContacts } from 'redux/operations';
-import { setFilter } from 'redux/filter/filter-slice';
-import { getFilteredContacts } from 'redux/contacts/contacts-selectors';
-import { getError } from 'redux/contacts/contacts-selectors';
-import { getFilter } from 'redux/filter/filter-selectors';
+import GlobalStyle from 'globalStyles';
+const Home = lazy(() => import('Pages/Home'));
+const LoginPage = lazy(() => import('Pages/LoginPage'));
+const Register = lazy(() => import('Pages/RegisterPage'));
+const ContactsPage = lazy(() => import('./Pages/ContactPage'));
+const NotFound = lazy(() => import('./Pages/NotFoundPage'));
 
-function App() {
-  const filteredContacts = useSelector(getFilteredContacts);
-  const filter = useSelector(getFilter);
-  const dispatch = useDispatch();
-
-  const isError = useSelector(getError);
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
-  const isNameExist = contName => {
-    const normalizedName = contName.toLowerCase();
-    const result = filteredContacts.find(({ name }) => {
-      return name.toLowerCase() === normalizedName;
-    });
-    return Boolean(result);
-  };
-
-  const handleAddContact = ({ name, number }) => {
-    if (isNameExist(name)) {
-      Notify.failure(`${name} has already added in contacts`);
-      return false;
-    } else {
-      Notify.success('Сontact has been added successfully');
-    }
-    const action = addContact({ name, number });
-    dispatch(action);
-    return true;
-  };
-
-  const changeFilter = e => {
-    dispatch(setFilter(e.currentTarget.value));
-  };
-
-  const isContact = Boolean(filteredContacts.length);
-
+const App = () => {
   return (
-    <div style={{paddingTop:30, paddingBottom:30}}>
-      <StyledBookTitle>Phonebook</StyledBookTitle>
-      <ContactForm onSubmit={handleAddContact} />
-      {!isError && (
-        <ContactContainer>
-          <ContactTitle>Contacts</ContactTitle>
-          <Filter value={filter} onChange={changeFilter} />
-          {isContact && <ContactList />}
-          {!isContact && <p>No contact in phonebook</p>}
-        </ContactContainer>
-      )}
-      {isError && (
-        <p style={{ fontSize: 24, fontWeight: 800 }}>
-          Ops, Something goes wrong{' '}
-        </p>
-      )}
-    </div>
+    <>
+      <GlobalStyle />
+      <Suspense fallback={<p>...loading</p>}>
+        <Routes>
+          <Route path="/" element={<SharedLayout />}>
+            <Route index element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/contacts" element={<ContactsPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </>
   );
-}
+};
 
 export default App;
