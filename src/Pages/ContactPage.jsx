@@ -1,7 +1,9 @@
-import { Notify } from 'notiflix';
+
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+
+import { showInfoMessage, showSuccessMessage } from 'shared/utils/notifications';
 
 import ContactForm from 'modules/ContactForm/ContactForm';
 import Filter from 'modules/Filter/Filter';
@@ -37,10 +39,10 @@ function ContactPage() {
 
   const handleAddContact = ({ name, number }) => {
     if (isNameExist(name)) {
-      Notify.failure(`${name} has already added in contacts`);
+      showInfoMessage(`${name} has already added in contacts`);
       return false;
     } else {
-      Notify.success('Сontact has been added successfully');
+      showSuccessMessage('Сontact has been added successfully');
     }
     const action = addContact({ name, number });
     dispatch(action);

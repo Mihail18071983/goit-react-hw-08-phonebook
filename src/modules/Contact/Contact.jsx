@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { deleteContact } from 'redux/contacts/contact-operations';
 import { getIsLoading } from 'redux/contacts/contacts-selectors';
-import { Notify } from 'notiflix';
+import { showSuccessMessage } from 'shared/utils/notifications';
 import StyledBtn from '../../shared/components/Button/Button.styled';
 import StyledContact from './Contact.styled';
 
@@ -15,7 +15,7 @@ const Contact = ({ name, number, id }) => {
   const dispatch = useDispatch();
   const handleDelete = () => {
     dispatch(deleteContact(id));
-    Notify.warning(
+    showSuccessMessage(
       `${name} has been successfully deleted from your phone book!`
     );
   };
