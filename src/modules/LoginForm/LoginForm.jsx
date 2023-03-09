@@ -60,7 +60,7 @@ const LoginForm = () => {
                   helperText={formik.touched.password && formik.errors.password}
         />
               <Button color="primary" variant="contained" fullWidth type="submit" style={{ marginTop: 10 }}>
-          Submit
+          Log in
         </Button>
       </form>
     </Box>

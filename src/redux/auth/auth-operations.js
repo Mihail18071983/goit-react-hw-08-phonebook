@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { showErrorMessage, showInfoMessage, showSuccessMessage } from 'shared/utils/notifications';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
 
@@ -42,10 +43,11 @@ export const logIn = createAsyncThunk(
       const res = await axios.post('/users/login', credentials);
       // After successful login, add the token to the HTTP header
       setAuthHeader(res.data.token);
+      showSuccessMessage('Successfully loggined. Welcome back');
       return res.data;
-    } catch (error) {
-      
-      return thunkAPI.rejectWithValue(error.message);
+    } catch (err) {
+      showErrorMessage('Enter correct login and password!');
+      return thunkAPI.rejectWithValue(err.message);
     }
   }
 );
@@ -60,6 +62,7 @@ export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     // After a successful logout, remove the token from the HTTP header
     clearAuthHeader();
   } catch (error) {
+    showErrorMessage('Application logout error');
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -84,18 +87,19 @@ export const refreshUser = createAsyncThunk(
       // If there is a token, add it to the HTTP header and perform the request
       setAuthHeader(persistedToken);
       const res = await axios.get('/users/current');
+       showInfoMessage('The last session is resumed');
       return res.data;
     } catch (error) {
+      showErrorMessage('User not found');
       return thunkAPI.rejectWithValue(error.message);
     }
   },
   {
-        condition: (_, {getState}) => {
-            const {auth} = getState();
-            if(!auth.token){
-                return false;
-            }
-        }
-    }
-
+    condition: (_, { getState }) => {
+      const { auth } = getState();
+      if (!auth.token) {
+        return false;
+      }
+    },
+  }
 );
