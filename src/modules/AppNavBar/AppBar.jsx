@@ -5,7 +5,7 @@ import { Header } from 'shared/SharedLayout/SharedLayot.styled';
 
 import { useSelector } from "react-redux";
 
-import { selectIsLoggedIn } from 'redux/auth/selectors';
+import { selectIsLoggedIn } from 'redux/auth/auth-selectors';
 
 
 

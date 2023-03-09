@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { deleteContact } from 'redux/contacts/operations';
+import { deleteContact } from 'redux/contacts/contact-operations';
 import { getIsLoading } from 'redux/contacts/contacts-selectors';
 import { Notify } from 'notiflix';
 import StyledBtn from '../../shared/components/Button/Button.styled';

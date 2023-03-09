@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-import { logIn } from 'redux/auth/operations';
+import { logIn } from 'redux/auth/auth-operations';
 import { useDispatch } from 'react-redux';
 
 

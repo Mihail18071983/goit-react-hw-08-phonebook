@@ -1,7 +1,7 @@
 // import { customAlphabet} from 'nanoid';
 import { createSlice } from '@reduxjs/toolkit';
 
-import { addContact, fetchContacts, deleteContact } from 'redux/contacts/operations';
+import { addContact, fetchContacts, deleteContact } from 'redux/contacts/contact-operations';
 
 // const nanoid = customAlphabet('1234567890', 3);
 

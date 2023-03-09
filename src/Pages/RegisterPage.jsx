@@ -1,7 +1,7 @@
 import React from 'react';
 import RegistrationForm from 'modules/RegisterForm/RegisterForm';
 
-import { selectIsLoggedIn } from 'redux/auth/selectors';  
+import { selectIsLoggedIn } from 'redux/auth/auth-selectors';  
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 

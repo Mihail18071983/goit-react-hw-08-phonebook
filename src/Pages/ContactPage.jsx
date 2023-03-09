@@ -10,7 +10,7 @@ import StyledBookTitle from 'modules/Contact/PhoneBookTitle.styled';
 import ContactTitle from 'modules/Contact/ContactTitle.styled';
 import ContactContainer from 'modules/Contact/СontactsContainer.styled';
 
-import { addContact, fetchContacts } from 'redux/contacts/operations';
+import { addContact, fetchContacts } from 'redux/contacts/contact-operations';
 import { setFilter } from 'redux/filter/filter-slice';
 import { getFilteredContacts } from 'redux/contacts/contacts-selectors';
 import { getError } from 'redux/contacts/contacts-selectors';
