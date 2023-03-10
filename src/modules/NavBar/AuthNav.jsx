@@ -1,11 +1,13 @@
-import { NavLink } from 'react-router-dom';
+
 import { Box } from '@mui/material';
+
+import { StyledNavLink } from 'shared/components/StyledLink.styled';
 
 const AuthNav = () => {
   return (
     <Box style={{ display: 'flex', gap: '10px' }}>
-      <NavLink to="/register">register</NavLink>
-      <NavLink to="/login">Login</NavLink>
+      <StyledNavLink to="/register">Sign up</StyledNavLink>
+      <StyledNavLink to="/login">Log in</StyledNavLink>
     </Box>
   );
 };

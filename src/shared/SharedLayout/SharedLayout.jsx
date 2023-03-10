@@ -2,7 +2,9 @@ import { Outlet } from 'react-router-dom';
 
 import AppNavBar from 'modules/AppNavBar/AppBar';
 
-import { Container} from './SharedLayot.styled';
+import { Container } from './SharedLayot.styled';
+
+
 
 
 

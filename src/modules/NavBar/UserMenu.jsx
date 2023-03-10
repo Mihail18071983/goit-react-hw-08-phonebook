@@ -6,6 +6,8 @@ import { logOut } from 'redux/auth/auth-operations';
 import {  useDispatch } from 'react-redux';
 import { useAuth } from 'shared/hooks/useAuth';
 
+import LogoutIcon from '@mui/icons-material/Logout';
+
 
 
 const UserMenu = () => {
@@ -25,7 +27,7 @@ const UserMenu = () => {
     >
       <p>{user.email}</p>
       <Button variant="contained" size="small" type="button" onClick={handleLogOut}>
-        Log out
+        <LogoutIcon/>
       </Button>
 
     </Box>

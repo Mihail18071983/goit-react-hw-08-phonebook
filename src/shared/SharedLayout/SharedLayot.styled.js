@@ -11,6 +11,6 @@ export const Header = styled.header`
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-  min-height: 60px;
+  min-height: 100px;
   background-color:#6495ed;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;`
