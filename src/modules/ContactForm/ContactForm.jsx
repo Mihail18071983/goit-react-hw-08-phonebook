@@ -1,81 +1,97 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import inititalState from './initialState';
-import StyledBtn from 'shared/components/Button/Button.styled';
-import StyledContactForm from './ContactForm.styled';
-import StyledLabel from './label.styled';
 
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+import { Form } from 'shared/components/Page.styled';
 
 import TextField from '@mui/material/TextField';
 
 import { getIsLoading } from 'redux/contacts/contacts-selectors';
 import { ColorRing } from 'react-loader-spinner';
+import Button from '@mui/material/Button';
 
 import { useSelector } from 'react-redux';
 
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+const validationSchema = yup.object({
+  name: yup
+    .string()
+    .min(6, 'Name should be of minimum 6 characters length')
+    .required('nickname is required'),
+  number: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
+});
+
 const ContactForm = ({ onSubmit }) => {
-  const [state, setState] = useState({ ...inititalState });
+  const formik = useFormik({
+    initialValues: { ...inititalState },
+    validationSchema: validationSchema,
+    onSubmit: (values, { resetForm }) => {
+      const result = onSubmit(values);
+      if (result) {
+        resetForm();
+      }
+    },
+  });
 
   const isLoading = useSelector(getIsLoading);
 
-  const handleChange = e => {
-    const { name, value } = e.currentTarget;
-    setState(prevState => {
-      return {
-        ...prevState,
-        [name]: value,
-      };
-    });
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    const result = onSubmit({ name, number });
-    if (result) {
-      setState({ ...inititalState });
-    }
-  };
-
-  const { name, number } = state;
-
   return (
-    <StyledContactForm onSubmit={handleSubmit}>
-      <StyledLabel>
-        Name
-        <TextField
-          fullWidth
-          type="text"
-          name="name"
-          label="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-          value={name}
-          onChange={handleChange}
-        />
-      </StyledLabel>
-      <StyledLabel>
-        Number
-        <input
-          type="tel"
-          name="number"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-          value={number}
-          onChange={handleChange}
-        />
-      </StyledLabel>
+    <Form onSubmit={formik.handleSubmit}>
+      <TextField
+        fullWidth
+        id="name"
+        name="name"
+        label="name"
+        required
+        value={formik.values.name}
+        onChange={formik.handleChange}
+        error={formik.touched.name && Boolean(formik.errors.name)}
+        helperText={formik.touched.name && formik.errors.name}
+      />
+
+      <TextField
+        fullWidth
+        id="number"
+        name="number"
+        label="phone"
+        required
+        value={formik.values.number}
+        onChange={formik.handleChange}
+        error={formik.touched.number && Boolean(formik.errors.number)}
+        helperText={formik.touched.number && formik.errors.number}
+      />
+
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           maxHeight: 30,
-          maxWidth: 100,
+          maxWidth: 150,
+          marginLeft: 'auto',
+          marginRight:'auto'
         }}
       >
-        {!isLoading && <StyledBtn type="submit">Add contact</StyledBtn>}
+        {!isLoading && (
+          <Button
+            color="primary"
+            variant="contained"
+            fullWidth
+            type="submit"
+            style={{
+              display: 'flex',
+              borderRadius: 10,
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }}
+          >
+            Add contact
+          </Button>
+        )}
         {isLoading && (
           <ColorRing
             visible={true}
@@ -88,7 +104,7 @@ const ContactForm = ({ onSubmit }) => {
           />
         )}
       </div>
-    </StyledContactForm>
+    </Form>
   );
 };
 

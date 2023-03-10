@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import StyledFilterLabel from './FilterLabel.styled';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+
 
 const Filter = ({ value, onChange }) => (
-  <StyledFilterLabel>
+  <InputLabel sx={{ display: 'flex', flexDirection:'column', gap:'10px', marginBottom:'30px', padding:'0px 16px'}}>
     Find contacts by name
-    <input type="text" value={value} onChange={onChange} />
-  </StyledFilterLabel>
+    <OutlinedInput type="text" value={value} onChange={onChange} />
+  </InputLabel>
 );
 
 export default Filter;

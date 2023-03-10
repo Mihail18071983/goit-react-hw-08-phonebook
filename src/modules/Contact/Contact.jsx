@@ -6,7 +6,13 @@ import { deleteContact } from 'redux/contacts/contact-operations';
 import { getIsLoading } from 'redux/contacts/contacts-selectors';
 import { showSuccessMessage } from 'shared/utils/notifications';
 import StyledBtn from '../../shared/components/Button/Button.styled';
-import StyledContact from './Contact.styled';
+import { StyledContact } from './Contact.styled';
+import { ConctactName } from './Contact.styled';
+import { ContactNumber } from './Contact.styled';
+
+import { IconContext } from 'react-icons';
+
+import { FaTrashAlt, FaSpinner } from 'react-icons/fa';
 
 import { ColorRing } from 'react-loader-spinner';
 
@@ -21,12 +27,14 @@ const Contact = ({ name, number, id }) => {
   };
   return (
     <StyledContact>
-      <span>
-        {name}: {number}
-      </span>
+      <ConctactName>{name}</ConctactName>
+      <ContactNumber href={`tel:${number}`}>{number}</ContactNumber>
+
       {!isLoading && (
         <StyledBtn type="button" onClick={handleDelete}>
-          Delete
+          <IconContext.Provider value={{ size: '2em' }}>
+            {isLoading ? <FaSpinner /> : <FaTrashAlt />}
+          </IconContext.Provider>
         </StyledBtn>
       )}
       {isLoading && (
