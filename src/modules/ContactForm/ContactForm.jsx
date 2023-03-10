@@ -5,6 +5,9 @@ import StyledBtn from 'shared/components/Button/Button.styled';
 import StyledContactForm from './ContactForm.styled';
 import StyledLabel from './label.styled';
 
+
+import TextField from '@mui/material/TextField';
+
 import { getIsLoading } from 'redux/contacts/contacts-selectors';
 import { ColorRing } from 'react-loader-spinner';
 
@@ -39,9 +42,11 @@ const ContactForm = ({ onSubmit }) => {
     <StyledContactForm onSubmit={handleSubmit}>
       <StyledLabel>
         Name
-        <input
+        <TextField
+          fullWidth
           type="text"
           name="name"
+          label="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
@@ -67,7 +72,7 @@ const ContactForm = ({ onSubmit }) => {
           alignItems: 'center',
           justifyContent: 'center',
           maxHeight: 30,
-          maxWidth:100,
+          maxWidth: 100,
         }}
       >
         {!isLoading && <StyledBtn type="submit">Add contact</StyledBtn>}

@@ -7,16 +7,19 @@ import { showInfoMessage, showSuccessMessage } from 'shared/utils/notifications'
 
 import ContactForm from 'modules/ContactForm/ContactForm';
 import Filter from 'modules/Filter/Filter';
-import ContactList from 'modules/ContactList/ContactList';
-import StyledBookTitle from 'modules/Contact/PhoneBookTitle.styled';
-import ContactTitle from 'modules/Contact/ContactTitle.styled';
+import ContactList from 'modules/ContactList/ContactList'
 import ContactContainer from 'modules/Contact/СontactsContainer.styled';
+
+import { StyledBox } from 'shared/components/Page.styled';
+import { FormHead } from 'shared/components/Page.styled';
 
 import { addContact, fetchContacts } from 'redux/contacts/contact-operations';
 import { setFilter } from 'redux/filter/filter-slice';
 import { getFilteredContacts } from 'redux/contacts/contacts-selectors';
 import { getError } from 'redux/contacts/contacts-selectors';
 import { getFilter } from 'redux/filter/filter-selectors';
+
+
 
 function ContactPage() {
   const filteredContacts = useSelector(getFilteredContacts);
@@ -56,12 +59,12 @@ function ContactPage() {
   const isContact = Boolean(filteredContacts.length);
 
   return (
-    <div style={{paddingTop:30, paddingBottom:30}}>
-      <StyledBookTitle>Phonebook</StyledBookTitle>
+    <StyledBox>
+      <FormHead>ADDCONTACT FORM</FormHead>
       <ContactForm onSubmit={handleAddContact} />
       {!isError && (
         <ContactContainer>
-          <ContactTitle>Contacts</ContactTitle>
+          <FormHead>Contacts</FormHead>
           <Filter value={filter} onChange={changeFilter} />
           {isContact && <ContactList />}
           {!isContact && <p>No contact in phonebook</p>}
@@ -72,7 +75,7 @@ function ContactPage() {
           Ops, Something goes wrong{' '}
         </p>
       )}
-    </div>
+    </StyledBox>
   );
 }
 

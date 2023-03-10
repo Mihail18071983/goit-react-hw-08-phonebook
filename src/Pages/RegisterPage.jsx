@@ -5,6 +5,9 @@ import { selectIsLoggedIn } from 'redux/auth/auth-selectors';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
+import { FormHead } from 'shared/components/Page.styled';
+import { StyledBox } from 'shared/components/Page.styled';
+
 
 const Register = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -12,10 +15,10 @@ const Register = () => {
     return (<Navigate to="/contacts"/>)
   }
   return (
-    <>
-      <h1>Register Page</h1>
+    <StyledBox>
+      <FormHead>USER REGISTRATION</FormHead>
       <RegistrationForm />
-    </>
+    </StyledBox>
   );
 };
 export default Register;

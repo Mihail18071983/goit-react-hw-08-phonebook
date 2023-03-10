@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import { logIn } from 'redux/auth/auth-operations';
 import { useDispatch } from 'react-redux';
 
+import { Form } from 'shared/components/Page.styled';
 
 const validationSchema = yup.object({
   email: yup
@@ -29,14 +30,19 @@ const LoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      dispatch(logIn(values))
+      dispatch(logIn(values));
       resetForm();
     },
   });
 
   return (
-    <Box margin={1}>
-      <form onSubmit={formik.handleSubmit}>
+    <Box
+      margin={1}
+      marginLeft="auto"
+      marginRight="auto"
+      boxShadow={' rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;'}
+    >
+      <Form onSubmit={formik.handleSubmit}>
         <TextField
           fullWidth
           id="email"
@@ -45,8 +51,7 @@ const LoginForm = () => {
           value={formik.values.email}
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                  margin='dense'
+          helperText={formik.touched.email && formik.errors.email}
         />
         <TextField
           fullWidth
@@ -57,12 +62,24 @@ const LoginForm = () => {
           value={formik.values.password}
           onChange={formik.handleChange}
           error={formik.touched.password && Boolean(formik.errors.password)}
-                  helperText={formik.touched.password && formik.errors.password}
+          helperText={formik.touched.password && formik.errors.password}
         />
-              <Button color="primary" variant="contained" fullWidth type="submit" style={{ marginTop: 10 }}>
+        <Button
+          color="primary"
+          variant="contained"
+          fullWidth
+          type="submit"
+          style={{
+            display: 'flex',
+            borderRadius: 10,
+            width: 100,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        >
           Log in
         </Button>
-      </form>
+      </Form>
     </Box>
   );
 };
