@@ -12,6 +12,7 @@ export const StyledContact = styled.li`
   gap: 20px;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color:#ffff;
 `;
 
 export const ConctactName = styled.p`

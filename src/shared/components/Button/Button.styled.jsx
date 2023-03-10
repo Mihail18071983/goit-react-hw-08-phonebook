@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 const StyledBtn = styled.button`
-  border: ${({ type }) =>
-    type === 'submit' ? 'none' : '1px solid grey'};;
+  border: none;;
   outline: none;
   cursor: pointer;
   background-color: ${({ type }) =>

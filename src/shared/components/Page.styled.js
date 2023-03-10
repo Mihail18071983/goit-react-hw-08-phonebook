@@ -17,7 +17,8 @@ export const Form = styled.form`
 
 export const StyledBox = styled(Box)`
   position: absolute;
-  top: 20%;
+  top: 15%;
   left: 50%;
   translate: -50%;
+  padding-bottom:50px;
 `;
