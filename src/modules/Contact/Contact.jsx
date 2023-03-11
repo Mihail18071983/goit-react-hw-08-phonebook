@@ -33,8 +33,23 @@ const Contact = ({ name, number, id }) => {
   };
   return (
     <StyledContact>
-      <ConctactName>{name}</ConctactName>
-      <ContactNumber href={`tel:${number}`}>{number}</ContactNumber>
+      {isEdit ? (
+        <EditContactForm
+          id={id}
+          initialValues={{ name, number }}
+          onSubmit={() => setIsEdit(false)}
+        />
+      ) : (
+        <>
+          <ConctactName>{name}</ConctactName>
+          <ContactNumber href={`tel:${number}`}>{number}</ContactNumber>
+          <StyledBtn type="button" onClick={() => setIsEdit(true)}>
+            <IconContext.Provider value={{ size: '2em' }}>
+              {isLoading ? <FaSpinner /> : <BiEditAlt />}
+            </IconContext.Provider>
+          </StyledBtn>
+        </>
+      )}
 
       {!isLoading && (
         <>
@@ -45,26 +60,7 @@ const Contact = ({ name, number, id }) => {
           </StyledBtn>
         </>
       )}
-      {isEdit && (
-        <EditContactForm
-          id={id}
-          initialValues={{ name, number }}
-          onSubmit={() => setIsEdit(false)}
-        />
-      )}
-      {!isEdit ? (
-        <StyledBtn type="button" onClick={() => setIsEdit(true)}>
-          <IconContext.Provider value={{ size: '2em' }}>
-            {isLoading ? <FaSpinner /> : <BiEditAlt />}
-          </IconContext.Provider>
-        </StyledBtn>
-      ) : (
-        <ListItemText
-          primary={name}
-          secondary={number}
-          sx={{ maxWidth: 320 }}
-        />
-      )}
+
       {isLoading && (
         <ColorRing
           visible={true}
