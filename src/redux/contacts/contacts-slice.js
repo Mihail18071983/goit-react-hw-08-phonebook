@@ -1,5 +1,6 @@
-// import { customAlphabet} from 'nanoid';
+
 import { createSlice } from '@reduxjs/toolkit';
+import { showSuccessMessage } from 'shared/utils/notifications';
 
 import {
   addContact,
@@ -8,7 +9,6 @@ import {
   editContact,
 } from 'redux/contacts/contact-operations';
 
-// const nanoid = customAlphabet('1234567890', 3);
 
 const handlePending = state => {
   state.isLoading = true;
@@ -60,6 +60,8 @@ const contactsSlice = createSlice({
           item => item.id === action.payload.id
         );
         state.items.splice(index, 1, action.payload);
+         showSuccessMessage('contact has been successfully updated');
+
       })
       .addCase(editContact.rejected, handleRejected);
   },

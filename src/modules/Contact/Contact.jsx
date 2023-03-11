@@ -31,6 +31,11 @@ const Contact = ({ name, number, id }) => {
       `${name} has been successfully deleted from your phone book!`
     );
   };
+
+  const handleEdit = () => {
+    setIsEdit(true)
+  }
+
   return (
     <StyledContact>
       {isEdit ? (
@@ -43,7 +48,7 @@ const Contact = ({ name, number, id }) => {
         <>
           <ConctactName>{name}</ConctactName>
           <ContactNumber href={`tel:${number}`}>{number}</ContactNumber>
-          <StyledBtn type="button" onClick={() => setIsEdit(true)}>
+          <StyledBtn type="button" onClick={handleEdit}>
             <IconContext.Provider value={{ size: '2em' }}>
               {isLoading ? <FaSpinner /> : <BiEditAlt />}
             </IconContext.Provider>
