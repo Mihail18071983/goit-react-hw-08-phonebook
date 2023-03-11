@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { deleteContact } from 'redux/contacts/contact-operations';
@@ -11,14 +12,19 @@ import { ConctactName } from './Contact.styled';
 import { ContactNumber } from './Contact.styled';
 
 import { IconContext } from 'react-icons';
+import { ListItemText } from '@mui/material';
 
 import { FaTrashAlt, FaSpinner } from 'react-icons/fa';
 
+import { BiEditAlt } from 'react-icons/bi';
+
 import { ColorRing } from 'react-loader-spinner';
+import EditContactForm from 'modules/EditContactForm/EditContactForm';
 
 const Contact = ({ name, number, id }) => {
   const isLoading = useSelector(getIsLoading);
   const dispatch = useDispatch();
+  const [isEdit, setIsEdit] = useState(false);
   const handleDelete = () => {
     dispatch(deleteContact(id));
     showSuccessMessage(
@@ -31,11 +37,33 @@ const Contact = ({ name, number, id }) => {
       <ContactNumber href={`tel:${number}`}>{number}</ContactNumber>
 
       {!isLoading && (
-        <StyledBtn type="button" onClick={handleDelete}>
+        <>
+          <StyledBtn type="button" onClick={handleDelete}>
+            <IconContext.Provider value={{ size: '2em' }}>
+              {isLoading ? <FaSpinner /> : <FaTrashAlt />}
+            </IconContext.Provider>
+          </StyledBtn>
+        </>
+      )}
+      {isEdit && (
+        <EditContactForm
+          id={id}
+          initialValues={{ name, number }}
+          onSubmit={() => setIsEdit(false)}
+        />
+      )}
+      {!isEdit ? (
+        <StyledBtn type="button" onClick={() => setIsEdit(true)}>
           <IconContext.Provider value={{ size: '2em' }}>
-            {isLoading ? <FaSpinner /> : <FaTrashAlt />}
+            {isLoading ? <FaSpinner /> : <BiEditAlt />}
           </IconContext.Provider>
         </StyledBtn>
+      ) : (
+        <ListItemText
+          primary={name}
+          secondary={number}
+          sx={{ maxWidth: 320 }}
+        />
       )}
       {isLoading && (
         <ColorRing
