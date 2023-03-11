@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react';
 import { useEffect } from 'react';
 import PrivateRoute from 'modules/PrivateRoute/PrivateRoute';
 import PublicRoute from 'modules/PublicRoute/PublicRoute';
+import { ColorRing } from 'react-loader-spinner';
 
 import { refreshUser } from 'redux/auth/auth-operations';
 
@@ -26,7 +27,15 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Suspense fallback={<p>...loading</p>}>
+      <Suspense fallback={  <ColorRing
+          visible={true}
+          height="40"
+          width="40"
+          ariaLabel="blocks-loading"
+          wrapperStyle={{}}
+          wrapperClass="blocks-wrapper"
+          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+        />}>
         {!isRefreshing && (
           <Routes>
             <Route path="/" element={<SharedLayout />}>

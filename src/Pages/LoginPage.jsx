@@ -1,16 +1,15 @@
 import LoginForm from 'modules/LoginForm/LoginForm';
 
 import { StyledBox } from 'shared/components/Page.styled';
-
 import { FormHead } from 'shared/components/Page.styled';
 
-import { selectIsLoggedIn } from 'redux/auth/auth-selectors';
-import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+
+import { useAuth } from 'shared/hooks/useAuth';
 
 
 const LoginPage = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+const { isLoggedIn } = useAuth();
   if (isLoggedIn) {
     return <Navigate to="/contacts" />;
   }

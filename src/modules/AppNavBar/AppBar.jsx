@@ -4,12 +4,10 @@ import Navigation from 'modules/Navigation/Navigation';
 import { Header } from 'shared/SharedLayout/SharedLayot.styled';
 import AppName from 'shared/components/AppName/AppName';
 
-import { useSelector } from 'react-redux';
-
-import { selectIsLoggedIn } from 'redux/auth/auth-selectors';
+import { useAuth } from 'shared/hooks/useAuth';
 
 const AppBar = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const { isLoggedIn } = useAuth();
   return (
     <Header>
       <AppName title='PHONEBOOK'/>
