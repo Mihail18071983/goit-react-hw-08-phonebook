@@ -125,5 +125,10 @@ const EditContactForm = ({ id, initialValues, onSubmit }) => {
 export default EditContactForm;
 
 EditContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
+    initialValues: PropTypes.exact ({
+        name: PropTypes.string.isRequired,
+        number:PropTypes.string.isRequired,
+    }) 
 };
