@@ -9,6 +9,8 @@ export const BurgerBox = styled.div`
   }
 
   @media screen and (min-width: 768px) {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
 `;
