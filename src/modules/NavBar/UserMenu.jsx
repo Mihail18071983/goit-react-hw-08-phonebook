@@ -1,36 +1,55 @@
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-
 import { logOut } from 'redux/auth/auth-operations';
-import {  useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useAuth } from 'shared/hooks/useAuth';
 
 import LogoutIcon from '@mui/icons-material/Logout';
 
+import { UserMenuBoxMobile, UserMenuBoxDesktop } from './UserMenu.styled';
 
-
-const UserMenu = () => {
-  const { user } = useAuth()
+export const UserMenuMobile = () => {
+  const { user } = useAuth();
   const dispatch = useDispatch();
-  const handleLogOut = () => { dispatch(logOut()) }
+  const handleLogOut = () => {
+    dispatch(logOut());
+  };
   return (
-
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent:'space-evenly',
-        maxWidth: 400,
-        gap: '10px',
-      }}
-    >
+    <UserMenuBoxMobile>
       <p>{user.email}</p>
-      <Button variant="contained" size="small" type="button" onClick={handleLogOut}>
-        <LogoutIcon/>
+      <Button
+        sx={{ maxWidth: '30px', marginLeft: 'auto', marginRight: 'auto' }}
+        variant="contained"
+        size="small"
+        type="button"
+        onClick={handleLogOut}
+      >
+        <LogoutIcon />
       </Button>
-
-    </Box>
+    </UserMenuBoxMobile>
   );
 };
-export default UserMenu;
+
+export const UserMenuDesktop = () => {
+  const { user } = useAuth();
+  const dispatch = useDispatch();
+  const handleLogOut = () => {
+    dispatch(logOut());
+  };
+  return (
+    <UserMenuBoxDesktop>
+      <p>{user.email}</p>
+      <Button
+        sx={{ maxWidth: '30px', marginLeft: 'auto', marginRight: 'auto' }}
+        variant="contained"
+        size="small"
+        type="button"
+        onClick={handleLogOut}
+      >
+        <LogoutIcon />
+      </Button>
+    </UserMenuBoxDesktop>
+  );
+};
+
+

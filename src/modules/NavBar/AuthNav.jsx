@@ -1,14 +1,27 @@
-import { AuthNavBox } from 'shared/SharedLayout/SharedLayot.styled';
+import { AuthNavBoxMobile } from 'shared/SharedLayout/SharedLayot.styled';
+
+import { AuthNavBoxDesktop } from 'shared/SharedLayout/SharedLayot.styled';
 
 import { StyledNavLink } from 'shared/components/StyledLink.styled';
 
-const AuthNav = () => {
+export const AuthNavMobile = () => {
   return (
-    <AuthNavBox
+    <AuthNavBoxMobile
     >
       <StyledNavLink to="/register">Sign up</StyledNavLink>
       <StyledNavLink to="/login">Log in</StyledNavLink>
-    </AuthNavBox>
+    </AuthNavBoxMobile>
   );
 };
-export default AuthNav;
+
+
+export const AuthNavDesktop = () => {
+  return (
+    <AuthNavBoxDesktop
+    >
+      <StyledNavLink to="/register">Sign up</StyledNavLink>
+      <StyledNavLink to="/login">Log in</StyledNavLink>
+    </AuthNavBoxDesktop>
+  );
+};
+
