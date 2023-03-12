@@ -1,14 +1,14 @@
-
-import { Box } from '@mui/material';
+import { AuthNavBox } from 'shared/SharedLayout/SharedLayot.styled';
 
 import { StyledNavLink } from 'shared/components/StyledLink.styled';
 
 const AuthNav = () => {
   return (
-    <Box style={{ display: 'flex', gap: '10px' }}>
+    <AuthNavBox
+    >
       <StyledNavLink to="/register">Sign up</StyledNavLink>
       <StyledNavLink to="/login">Log in</StyledNavLink>
-    </Box>
+    </AuthNavBox>
   );
 };
 export default AuthNav;

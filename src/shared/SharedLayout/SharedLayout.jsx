@@ -2,18 +2,16 @@ import { Outlet } from 'react-router-dom';
 
 import AppNavBar from 'modules/AppNavBar/AppBar';
 
-import { Container } from './SharedLayot.styled';
-
-
-
-
+import { Box } from '@mui/material';
 
 const SharedLayout = () => {
   return (
-    <Container>
-        <AppNavBar/>
-      <Outlet />
-    </Container>
+    <>
+      <AppNavBar />
+      <Box sx={{maxWidth:'1200px'}}>
+        <Outlet />
+      </Box>
+    </>
   );
 };
 

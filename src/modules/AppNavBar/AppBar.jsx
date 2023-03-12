@@ -6,13 +6,17 @@ import AppName from 'shared/components/AppName/AppName';
 
 import { useAuth } from 'shared/hooks/useAuth';
 
+import { HeaderContainer } from 'shared/SharedLayout/SharedLayot.styled';
+
 const AppBar = () => {
   const { isLoggedIn } = useAuth();
   return (
     <Header>
+      <HeaderContainer>
       <AppName title='PHONEBOOK'/>
       <Navigation />
-      {isLoggedIn ? <UserMenu /> : <AuthNav />}
+        {isLoggedIn ? <UserMenu /> : <AuthNav />}
+        </HeaderContainer>
     </Header>
   );
 };

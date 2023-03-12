@@ -6,8 +6,8 @@ import HomeIcon from '@mui/icons-material/Home';
 const Navigation = () => {
   const { isLoggedIn } = useAuth();
   return (
-    <nav style={{ display: 'flex', gap: '10px' }}>
-      <StyledNavLink to="/"><HomeIcon  /><span>Home</span></StyledNavLink>
+    <nav >
+      <StyledNavLink to="/"><HomeIcon/>Home</StyledNavLink>
       {isLoggedIn && <StyledNavLink to="/contacts">Contacts Page</StyledNavLink>}
     </nav>
   );

@@ -35,9 +35,8 @@ const EditContactForm = ({ id, initialValues, onSubmit }) => {
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
       dispatch(editContact({ id, ...values }));
-      console.log(values);
       resetForm();
-        onSubmit();
+      onSubmit();
     },
   });
 
@@ -46,7 +45,6 @@ const EditContactForm = ({ id, initialValues, onSubmit }) => {
   return (
     <Box
       margin={1}
-      marginBottom="30px"
       marginLeft="auto"
       marginRight="auto"
       boxShadow={
