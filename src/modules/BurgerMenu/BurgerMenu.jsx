@@ -33,7 +33,7 @@ export default function BurgerMenu() {
   const currentWidth = useWindowDimensions().width;
 
   useEffect(() => {
-    currentWidth > 768 ? setIsShown(false) : setIsShown(true);
+    currentWidth > 767 ? setIsShown(false) : setIsShown(true);
   }, [currentWidth]);
 
   return (
