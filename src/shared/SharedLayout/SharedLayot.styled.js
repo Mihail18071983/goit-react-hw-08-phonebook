@@ -9,6 +9,7 @@ export const HeaderContainer = styled.div`
   @media screen and (max-width: 767px) {
     height: 60px;
     display: flex;
+    align-items: center;
     gap: 20px;
   }
   @media screen and (min-width: 768px) {
