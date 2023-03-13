@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const BurgerBox = styled.div`
-  @media screen and (max-width: 767px) {
+position: relative;
+  /* @media screen and (max-width: 767px) {
    display: flex;
     flex-direction: column;
     gap: 10px;
@@ -12,5 +13,5 @@ export const BurgerBox = styled.div`
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-  }
+  } */
 `;
