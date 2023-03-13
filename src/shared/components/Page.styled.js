@@ -8,11 +8,14 @@ export const FormHead = styled.h1`
 `;
 
 export const Form = styled.form`
+  margin: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
-  padding: 10px 16px;
-  width: 400px;
+  padding: 10px 20px;
+  max-width: 400px;
 `;
 
 export const StyledBox = styled(Box)`
@@ -20,5 +23,5 @@ export const StyledBox = styled(Box)`
   top: 30%;
   left: 50%;
   translate: -50%;
-  padding-bottom:50px;
+  padding-bottom: 50px;
 `;

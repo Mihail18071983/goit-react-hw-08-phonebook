@@ -53,10 +53,3 @@ export const AuthNavBoxDesktop = styled.nav`
     gap: 30px;
   }
 `;
-
-// export const MenuBtn = styled(StyledBtn)`
-// color: #fff;
-// @media screen and (min-width:768px) {
-//   display: none;
-// }
-// `

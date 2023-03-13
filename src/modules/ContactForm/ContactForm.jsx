@@ -43,7 +43,6 @@ const ContactForm = ({ onSubmit }) => {
 
   return (
     <Box
-      margin={1}
       marginBottom='30px'
       marginLeft="auto"
       marginRight="auto"

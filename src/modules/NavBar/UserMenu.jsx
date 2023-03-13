@@ -6,6 +6,8 @@ import { useAuth } from 'shared/hooks/useAuth';
 
 import LogoutIcon from '@mui/icons-material/Logout';
 
+import { UserName } from './UserMenu.styled';
+
 import { UserMenuBoxMobile, UserMenuBoxDesktop } from './UserMenu.styled';
 
 export const UserMenuMobile = () => {
@@ -16,7 +18,7 @@ export const UserMenuMobile = () => {
   };
   return (
     <UserMenuBoxMobile>
-      <p>{user.email}</p>
+      <UserName>{user.email}</UserName>
       <Button
         sx={{ maxWidth: '30px', marginLeft: 'auto', marginRight: 'auto' }}
         variant="contained"
@@ -38,7 +40,7 @@ export const UserMenuDesktop = () => {
   };
   return (
     <UserMenuBoxDesktop>
-      <p>{user.email}</p>
+      <UserName>{user.email}</UserName>
       <Button
         sx={{ maxWidth: '30px', marginLeft: 'auto', marginRight: 'auto' }}
         variant="contained"

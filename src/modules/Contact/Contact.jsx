@@ -13,7 +13,6 @@ import { ContactNumber } from './Contact.styled';
 
 import { IconContext } from 'react-icons';
 
-
 import { FaTrashAlt, FaSpinner } from 'react-icons/fa';
 
 import { BiEditAlt } from 'react-icons/bi';
@@ -33,10 +32,11 @@ const Contact = ({ name, number, id }) => {
   };
 
   const handleEdit = () => {
-    setIsEdit(true)
-  }
+    setIsEdit(true);
+  };
 
   return (
+    
     <StyledContact>
       {isEdit ? (
         <EditContactForm
@@ -77,7 +77,8 @@ const Contact = ({ name, number, id }) => {
           colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
         />
       )}
-    </StyledContact>
+      </StyledContact>
+      
   );
 };
 
