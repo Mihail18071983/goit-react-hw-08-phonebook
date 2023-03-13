@@ -3,7 +3,8 @@ import styled from '@emotion/styled';
 
 export const StyledNavLink = styled(NavLink)`
   display: flex;
-  gap:5px;
+  gap: 5px;
+  align-items: center;
   padding: 12px 20px;
   font-weight: 400;
   font-size: 20px;

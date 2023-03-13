@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import inititalState from './initialState';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -11,10 +10,11 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 import { getIsLoading } from 'redux/contacts/contacts-selectors';
+import { editContact } from 'redux/contacts/contact-operations';
 import { ColorRing } from 'react-loader-spinner';
 import Button from '@mui/material/Button';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -27,15 +27,15 @@ const validationSchema = yup.object({
   number: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
 });
 
-const ContactForm = ({ onSubmit }) => {
+const EditContactForm = ({ id, initialValues, onSubmit }) => {
+  const dispatch = useDispatch();
   const formik = useFormik({
-    initialValues: { ...inititalState },
+    initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      const result = onSubmit(values);
-      if (result) {
-        resetForm();
-      }
+      dispatch(editContact({ id, ...values }));
+      resetForm();
+      onSubmit();
     },
   });
 
@@ -43,14 +43,14 @@ const ContactForm = ({ onSubmit }) => {
 
   return (
     <Box
-      marginBottom='30px'
+      margin={1}
       marginLeft="auto"
       marginRight="auto"
       boxShadow={
         ' rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;'
       }
       backgroundColor="#ffff"
-      borderRadius='5px'
+      borderRadius="5px"
     >
       <Form onSubmit={formik.handleSubmit}>
         <TextField
@@ -101,7 +101,7 @@ const ContactForm = ({ onSubmit }) => {
                 marginRight: 'auto',
               }}
             >
-              Add contact
+              Edit
             </Button>
           )}
           {isLoading && (
@@ -121,8 +121,13 @@ const ContactForm = ({ onSubmit }) => {
   );
 };
 
-export default ContactForm;
+export default EditContactForm;
 
-ContactForm.propTypes = {
+EditContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  initialValues: PropTypes.exact({
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+  }),
 };

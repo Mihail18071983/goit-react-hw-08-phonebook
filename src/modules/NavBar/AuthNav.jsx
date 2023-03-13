@@ -1,14 +1,27 @@
+import { AuthNavBoxMobile } from 'shared/SharedLayout/SharedLayot.styled';
 
-import { Box } from '@mui/material';
+import { AuthNavBoxDesktop } from 'shared/SharedLayout/SharedLayot.styled';
 
 import { StyledNavLink } from 'shared/components/StyledLink.styled';
 
-const AuthNav = () => {
+export const AuthNavMobile = () => {
   return (
-    <Box style={{ display: 'flex', gap: '10px' }}>
+    <AuthNavBoxMobile
+    >
       <StyledNavLink to="/register">Sign up</StyledNavLink>
       <StyledNavLink to="/login">Log in</StyledNavLink>
-    </Box>
+    </AuthNavBoxMobile>
   );
 };
-export default AuthNav;
+
+
+export const AuthNavDesktop = () => {
+  return (
+    <AuthNavBoxDesktop
+    >
+      <StyledNavLink to="/register">Sign up</StyledNavLink>
+      <StyledNavLink to="/login">Log in</StyledNavLink>
+    </AuthNavBoxDesktop>
+  );
+};
+
