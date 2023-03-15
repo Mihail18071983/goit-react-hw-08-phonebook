@@ -23,11 +23,16 @@ export default function BurgerMenu() {
   const { isLoggedIn } = useAuth();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const menu = document.getElementById('basic-menu');
+
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
+    menu.style.display = 'block';
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+    menu.style.display = 'none';
   };
 
   const currentWidth = useWindowDimensions().width;
@@ -38,40 +43,48 @@ export default function BurgerMenu() {
 
   return (
     <>
-      
-        <BurgerBox>
-          <Button
-            id="basic-button"
-            aria-controls={open ? 'basic-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-          >
-            <MenuIcon />
-          </Button>
-        {isShown && <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            'aria-labelledby': 'basic-button',
-          }}
+      <BurgerBox>
+        <Button
+          id="basic-button"
+          aria-controls={open ? 'basic-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
         >
-          <MenuItem onClick={handleClose}>
-            <StyledNavLink to="/">Home</StyledNavLink>
-          </MenuItem>
-          {isLoggedIn && (
+          <MenuIcon />
+        </Button>
+        {isShown && (
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+          >
             <MenuItem onClick={handleClose}>
-              <StyledNavLink to="/contacts">Contacts Page</StyledNavLink>
+              <StyledNavLink to="/">Home</StyledNavLink>
             </MenuItem>
-          )}
-          <MenuItem onClick={handleClose}>
-            {isLoggedIn ? <UserMenuMobile /> : <AuthNavMobile />}
-          </MenuItem>
-        </Menu>}
-        </BurgerBox>
-      
+            {isLoggedIn && (
+              <MenuItem onClick={handleClose}>
+                <StyledNavLink to="/contacts">Contacts Page</StyledNavLink>
+              </MenuItem>
+            )}
+            <MenuItem onClick={handleClose}>
+              {isLoggedIn ? <UserMenuMobile /> : <AuthNavMobile />}
+            </MenuItem>
+          </Menu>
+        )}
+      </BurgerBox>
     </>
   );
 }
