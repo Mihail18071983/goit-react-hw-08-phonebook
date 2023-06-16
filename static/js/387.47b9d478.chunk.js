@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkcontactBook_front=self.webpackChunkcontactBook_front||[]).push([[387],{5387:function(n,t,o){o.r(t);var c=o(184);t.default=function(){return(0,c.jsx)("h1",{children:"Not Found"})}}}]);
+//# sourceMappingURL=387.47b9d478.chunk.js.map
