@@ -27,12 +27,16 @@ export default function BurgerMenu() {
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
-    menu.style.display = 'block';
+    if (menu) {
+      menu.style.display = 'block';
+    }
   };
 
   const handleClose = () => {
     setAnchorEl(null);
-    menu.style.display = 'none';
+    if (menu) {
+      menu.style.display = 'none';
+    }
   };
 
   const currentWidth = useWindowDimensions().width;
@@ -88,3 +92,4 @@ export default function BurgerMenu() {
     </>
   );
 }
+
