@@ -1,18 +1,51 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { showErrorMessage, showInfoMessage, showSuccessMessage } from 'shared/utils/notifications';
+import {
+  showErrorMessage,
+  showInfoMessage,
+  showSuccessMessage,
+} from 'shared/utils/notifications';
 
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
+// axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
+
+export const instance = axios.create({
+  baseURL: 'http://localhost:3000/api',
+});
 
 // Utility to add JWT
 const setAuthHeader = token => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  instance.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
 // Utility to remove JWT
 const clearAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = '';
+  instance.defaults.headers.common.Authorization = '';
 };
+
+instance.interceptors.response.use(
+  response => {
+    console.log('Interceptor response data:', response.data);
+    return response;
+  },
+  async error => {
+    if (error.response.status === 401) {
+      const refreshToken = localStorage.getItem('refreshToken');
+      try {
+        const { data } = await instance.post('/users/refresh', {
+          refreshToken,
+        });
+        console.log('data in intersector', data);
+        setAuthHeader(data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+        // localStorage.setItem('accessToken', data.accessToken); 
+        return instance(error.config);
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 /*
  * POST @ /users/signup
@@ -22,10 +55,13 @@ export const register = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) => {
     try {
-      const res = await axios.post('/users/signup', credentials);
+      const { data } = await instance.post('/users/register', credentials);
       // After successful registration, add the token to the HTTP header
-      setAuthHeader(res.data.token);
-      return res.data;
+      console.log('data in register', data);
+      setAuthHeader(data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      showSuccessMessage('Successfully registered. Welcome!');
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -40,11 +76,12 @@ export const logIn = createAsyncThunk(
   'auth/login',
   async (credentials, thunkAPI) => {
     try {
-      const res = await axios.post('/users/login', credentials);
+      const { data } = await instance.post('/users/login', credentials);
       // After successful login, add the token to the HTTP header
-      setAuthHeader(res.data.token);
+      setAuthHeader(data.accessToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
       showSuccessMessage('Successfully loggined. Welcome back');
-      return res.data;
+      return data;
     } catch (err) {
       showErrorMessage('Enter correct login and password!');
       return thunkAPI.rejectWithValue(err.message);
@@ -87,7 +124,7 @@ export const refreshUser = createAsyncThunk(
       // If there is a token, add it to the HTTP header and perform the request
       setAuthHeader(persistedToken);
       const res = await axios.get('/users/current');
-       showInfoMessage('The last session is resumed');
+      showInfoMessage('The last session is resumed');
       return res.data;
     } catch (error) {
       showErrorMessage('User not found');
