@@ -78,7 +78,7 @@ export const logIn = createAsyncThunk(
     try {
       const { data } = await instance.post('/users/login', credentials);
       // After successful login, add the token to the HTTP header
-      setAuthHeader(data.token);
+      setAuthHeader(data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
       showSuccessMessage('Successfully loggined. Welcome back');
       return {
