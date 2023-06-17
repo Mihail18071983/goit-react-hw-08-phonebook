@@ -17,13 +17,13 @@ import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 
 const phoneRegExp =
-  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-
+  /^\(\d{3}\)\s\d{3}-\d{4}$/
 const validationSchema = yup.object({
   name: yup
     .string()
     .min(6, 'Name should be of minimum 6 characters length')
     .required('nickname is required'),
+  email: yup.string().email('Email is not valid'),
   number: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
 });
 
@@ -43,14 +43,14 @@ const ContactForm = ({ onSubmit }) => {
 
   return (
     <Box
-      marginBottom='30px'
+      marginBottom="30px"
       marginLeft="auto"
       marginRight="auto"
       boxShadow={
         ' rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;'
       }
       backgroundColor="#ffff"
-      borderRadius='5px'
+      borderRadius="5px"
     >
       <Form onSubmit={formik.handleSubmit}>
         <TextField
@@ -67,9 +67,22 @@ const ContactForm = ({ onSubmit }) => {
 
         <TextField
           fullWidth
+          id="email"
+          name="email"
+          label="Email"
+          required
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
+        />
+
+        <TextField
+          fullWidth
           id="number"
           name="number"
           label="phone"
+          placeholder="(XXX) XXX-XXXX"
           required
           value={formik.values.number}
           onChange={formik.handleChange}

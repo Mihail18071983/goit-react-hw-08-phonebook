@@ -1,5 +1,5 @@
 const inititalState = {
-     name: '', number: ''
+     name: '', email:'', number: ''
 }
 
 export default inititalState;
