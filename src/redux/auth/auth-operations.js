@@ -6,7 +6,6 @@ import {
   showSuccessMessage,
 } from 'shared/utils/notifications';
 
-
 export const instance = axios.create({
   baseURL: 'http://localhost:3000/api',
 });
@@ -20,10 +19,7 @@ const clearAuthHeader = () => {
 };
 
 instance.interceptors.response.use(
-  response => {
-    console.log('Interceptor response data:', response.data);
-    return response;
-  },
+  response => response,
   async error => {
     if (error.response.status === 401) {
       const refreshToken = localStorage.getItem('refreshToken');
@@ -34,7 +30,7 @@ instance.interceptors.response.use(
         console.log('data in intersector', data);
         setAuthHeader(data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
-  
+
         return instance(error.config);
       } catch (error) {
         return Promise.reject(error);
@@ -44,7 +40,6 @@ instance.interceptors.response.use(
   }
 );
 
-
 export const register = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) => {
@@ -53,7 +48,7 @@ export const register = createAsyncThunk(
       // After successful registration, add the token to the HTTP header
       console.log('data in registry', data);
       setAuthHeader(data.accessToken);
-      localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
       showSuccessMessage('Successfully registered. Welcome!');
       return {
         user: {
@@ -120,7 +115,7 @@ export const refreshUser = createAsyncThunk(
     // Reading the token from the state via getState()
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
-    console.log('persisted token: ',  persistedToken);
+    console.log('persisted token: ', persistedToken);
 
     if (persistedToken === null) {
       // If there is no token, exit without performing any request
@@ -137,5 +132,5 @@ export const refreshUser = createAsyncThunk(
       showErrorMessage('User not found');
       return thunkAPI.rejectWithValue(error.message);
     }
-  },
+  }
 );

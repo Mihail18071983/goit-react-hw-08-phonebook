@@ -16,21 +16,20 @@ import Button from '@mui/material/Button';
 
 import { useSelector } from 'react-redux';
 
-// const phoneRegExp =
-//   /^\(\d{3}\)\s\d{3}-\d{4}$/
-// const validationSchema = yup.object({
-//   name: yup
-//     .string()
-//     .min(6, 'Name should be of minimum 6 characters length')
-//     .required('nickname is required'),
-//   email: yup.string().email('Email is not valid'),
-//   number: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
-// });
+const phoneRegExp = /^\(\d{3}\)\s\d{3}-\d{4}$/;
+const validationSchema = yup.object({
+  name: yup
+    .string()
+    .min(6, 'Name should be of minimum 6 characters length')
+    .required('nickname is required'),
+  email: yup.string().email('Email is not valid'),
+  number: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
+});
 
 const ContactForm = ({ onSubmit }) => {
   const formik = useFormik({
     initialValues: { ...inititalState },
-    // validationSchema: validationSchema,
+    validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
       const result = onSubmit(values);
       if (result) {
@@ -58,6 +57,7 @@ const ContactForm = ({ onSubmit }) => {
           id="name"
           name="name"
           label="name"
+          placeholder="John Doe"
           required
           value={formik.values.name}
           onChange={formik.handleChange}
@@ -71,6 +71,7 @@ const ContactForm = ({ onSubmit }) => {
           name="email"
           label="Email"
           required
+          placeholder="example@example.com"
           value={formik.values.email}
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
