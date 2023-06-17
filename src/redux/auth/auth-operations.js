@@ -52,7 +52,7 @@ export const register = createAsyncThunk(
       const { data } = await instance.post('/users/register', credentials);
       // After successful registration, add the token to the HTTP header
       console.log('data in registry', data);
-      setAuthHeader(data.token);
+      setAuthHeader(data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       showSuccessMessage('Successfully registered. Welcome!');
       return {
@@ -60,7 +60,7 @@ export const register = createAsyncThunk(
           name: data.name,
           email: data.email,
         },
-        token: data.token,
+        token: data.accessToken,
       };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -86,7 +86,7 @@ export const logIn = createAsyncThunk(
           name: data.name,
           email: data.email,
         },
-        token: data.token,
+        token: data.accessToken,
       };
     } catch (err) {
       showErrorMessage('Enter correct login and password!');
@@ -120,6 +120,7 @@ export const refreshUser = createAsyncThunk(
     // Reading the token from the state via getState()
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
+    console.log('persisted token: ',  persistedToken);
 
     if (persistedToken === null) {
       // If there is no token, exit without performing any request
