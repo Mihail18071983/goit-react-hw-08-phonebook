@@ -27,13 +27,12 @@ instance.interceptors.response.use(
         const { data } = await instance.post('/users/refresh', {
           refreshToken,
         });
-        console.log('data in intersector', data);
+        console.log('accessToken in interseptor', data.accessToken);
         setAuthHeader(data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
-
+        console.log('config request',error.config)
         return instance(error.config);
       } catch (error) {
-        localStorage.setItem('refreshToken', null);
         return Promise.reject(error);
       }
     }
@@ -47,7 +46,7 @@ export const register = createAsyncThunk(
     try {
       const { data } = await instance.post('/users/register', credentials);
       // After successful registration, add the token to the HTTP header
-      console.log('data in registry', data);
+      console.log('accesssToken in regisry', data.accessToken);
       setAuthHeader(data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
       showSuccessMessage('Successfully registered. Welcome!');
