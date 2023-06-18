@@ -33,6 +33,7 @@ instance.interceptors.response.use(
 
         return instance(error.config);
       } catch (error) {
+        localStorage.setItem('refreshToken', null);
         return Promise.reject(error);
       }
     }
