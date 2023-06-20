@@ -12,6 +12,8 @@ export const instance = axios.create({
   baseURL: 'http://localhost:3000/api',
 });
 
+
+
 const setAuthHeader = token => {
   instance.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
@@ -20,24 +22,6 @@ const clearAuthHeader = () => {
   instance.defaults.headers.common.Authorization = '';
 };
 
-export const refreshToken = createAsyncThunk(
-  'auth/refreshToken',
-  async (_, { getState, rejectWithValue }) => {
-    const { refreshToken } = getState().auth;
-
-    try {
-      const response = await axios.post('/users/refresh', { refreshToken });
-
-      // The server should return a new access token and refresh token
-      return {
-        accessToken: response.data.accessToken,
-        refreshToken: response.data.refreshToken,
-      };
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
 
 instance.interceptors.response.use(
   response => response,

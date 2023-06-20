@@ -89,7 +89,8 @@ Contact.defaultProps = {
 };
 
 Contact.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
