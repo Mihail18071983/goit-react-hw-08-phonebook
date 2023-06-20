@@ -17,6 +17,7 @@ import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 
 const phoneRegExp = /^\(\d{3}\)\s\d{3}-\d{4}$/;
+
 const validationSchema = yup.object({
   name: yup
     .string()
@@ -82,7 +83,7 @@ const ContactForm = ({ onSubmit }) => {
           fullWidth
           id="number"
           name="number"
-          label="phone"
+          label="phone number"
           placeholder="(XXX) XXX-XXXX"
           required
           value={formik.values.number}

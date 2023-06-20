@@ -6,6 +6,8 @@ import {
   showSuccessMessage,
 } from 'shared/utils/notifications';
 
+
+
 export const instance = axios.create({
   baseURL: 'http://localhost:3000/api',
 });
@@ -17,6 +19,25 @@ const setAuthHeader = token => {
 const clearAuthHeader = () => {
   instance.defaults.headers.common.Authorization = '';
 };
+
+export const refreshToken = createAsyncThunk(
+  'auth/refreshToken',
+  async (_, { getState, rejectWithValue }) => {
+    const { refreshToken } = getState().auth;
+
+    try {
+      const response = await axios.post('/users/refresh', { refreshToken });
+
+      // The server should return a new access token and refresh token
+      return {
+        accessToken: response.data.accessToken,
+        refreshToken: response.data.refreshToken,
+      };
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 instance.interceptors.response.use(
   response => response,
@@ -30,8 +51,10 @@ instance.interceptors.response.use(
         console.log('accessToken in interseptor', data.accessToken);
         setAuthHeader(data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
-        console.log('config request',error.config)
-        return instance(error.config);
+        const updatedConfig = { ...error.config };
+        updatedConfig.headers.Authorization = `Bearer ${data.accessToken}`
+        console.log('updatedConfig', updatedConfig);
+        return instance(updatedConfig);
       } catch (error) {
         return Promise.reject(error);
       }
@@ -39,6 +62,7 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 
 export const register = createAsyncThunk(
   'auth/register',
@@ -96,7 +120,7 @@ export const logIn = createAsyncThunk(
  */
 export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
-    await axios.post('/users/logout');
+    await instance.post('/users/logout');
     // After a successful logout, remove the token from the HTTP header
     clearAuthHeader();
   } catch (error) {
@@ -109,7 +133,7 @@ export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
  * GET @ /users/current
  * headers: Authorization: Bearer token
  */
-export const refreshUser = createAsyncThunk(
+export const getCurrentUser = createAsyncThunk(
   'auth/refresh',
   async (_, thunkAPI) => {
     // Reading the token from the state via getState()
@@ -117,7 +141,7 @@ export const refreshUser = createAsyncThunk(
     const persistedToken = state.auth.token;
     console.log('persisted token: ', persistedToken);
 
-    if (persistedToken === null) {
+    if (!persistedToken) {
       // If there is no token, exit without performing any request
       return thunkAPI.rejectWithValue('Unable to fetch user');
     }

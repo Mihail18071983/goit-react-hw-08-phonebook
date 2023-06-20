@@ -9,6 +9,7 @@ import { showSuccessMessage } from 'shared/utils/notifications';
 import StyledBtn from '../../shared/components/Button/Button.styled';
 import { StyledContact } from './Contact.styled';
 import { ConctactName } from './Contact.styled';
+import { ConctactMail } from './Contact.styled';
 import { ContactNumber } from './Contact.styled';
 
 import { IconContext } from 'react-icons';
@@ -20,7 +21,7 @@ import { BiEditAlt } from 'react-icons/bi';
 import { ColorRing } from 'react-loader-spinner';
 import EditContactForm from 'modules/EditContactForm/EditContactForm';
 
-const Contact = ({ name, number, id }) => {
+const Contact = ({ name, email, number, id }) => {
   const isLoading = useSelector(getIsLoading);
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
@@ -36,7 +37,6 @@ const Contact = ({ name, number, id }) => {
   };
 
   return (
-    
     <StyledContact>
       {isEdit ? (
         <EditContactForm
@@ -47,6 +47,7 @@ const Contact = ({ name, number, id }) => {
       ) : (
         <>
           <ConctactName>{name}</ConctactName>
+          <ConctactMail href={`mailto:${email}`}>{email}</ConctactMail>
           <ContactNumber href={`tel:${number}`}>{number}</ContactNumber>
           <StyledBtn type="button" onClick={handleEdit}>
             <IconContext.Provider value={{ size: '2em' }}>
@@ -77,8 +78,7 @@ const Contact = ({ name, number, id }) => {
           colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
         />
       )}
-      </StyledContact>
-      
+    </StyledContact>
   );
 };
 

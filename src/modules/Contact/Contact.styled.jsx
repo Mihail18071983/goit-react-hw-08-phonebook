@@ -20,6 +20,11 @@ export const ConctactName = styled.p`
   font-size: 18px;
 `;
 
+export const ConctactMail = styled.p`
+  margin-left: 20px;
+  font-size: 18px;
+`;
+
 export const ContactNumber = styled.a`
 color: #000;
   margin-left: auto;

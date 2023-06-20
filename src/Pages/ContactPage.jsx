@@ -40,14 +40,14 @@ function ContactPage() {
     return Boolean(result);
   };
 
-  const handleAddContact = ({ name, number }) => {
+  const handleAddContact = ({ name, email, number }) => {
     if (isNameExist(name)) {
       showInfoMessage(`${name} has already added in contacts`);
       return false;
     } else {
       showSuccessMessage('Сontact has been added successfully');
     }
-    const action = addContact({ name, number });
+    const action = addContact({ name, email, number });
     dispatch(action);
     return true;
   };

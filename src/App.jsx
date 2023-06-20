@@ -5,7 +5,7 @@ import PrivateRoute from 'modules/PrivateRoute/PrivateRoute';
 import PublicRoute from 'modules/PublicRoute/PublicRoute';
 import { ColorRing } from 'react-loader-spinner';
 
-import { refreshUser } from 'redux/auth/auth-operations';
+import { getCurrentUser } from 'redux/auth/auth-operations';
 
 import SharedLayout from 'shared/SharedLayout/SharedLayout';
 
@@ -22,7 +22,7 @@ const App = () => {
   const { isRefreshing } = useAuth();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(refreshUser());
+    dispatch(getCurrentUser());
   }, [dispatch]);
   return (
     <>

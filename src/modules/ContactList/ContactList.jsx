@@ -11,8 +11,10 @@ const ContactList = () => {
   const visibleContacts = useSelector(getFilteredContacts);
   return (
     <ContactListStyled>
-      {visibleContacts.map(({ id, name, number }) => {
-        return <Contact name={name} key={id} number={number} id={id} />;
+      {visibleContacts.map(({ id, name, email, number }) => {
+        return (
+          <Contact name={name} key={id} email={email} number={number} id={id} />
+        );
       })}
     </ContactListStyled>
   );
@@ -29,6 +31,7 @@ ContactList.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
       number: PropTypes.string.isRequired,
     })
   ),
