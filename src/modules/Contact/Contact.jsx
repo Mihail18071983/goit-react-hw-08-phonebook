@@ -41,7 +41,7 @@ const Contact = ({ name, email, number, id }) => {
       {isEdit ? (
         <EditContactForm
           id={id}
-          initialValues={{ name, number }}
+          initialValues={{ name, email, number }}
           onSubmit={() => setIsEdit(false)}
         />
       ) : (

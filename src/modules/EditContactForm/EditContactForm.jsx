@@ -23,6 +23,7 @@ const validationSchema = yup.object({
     .string()
     .min(6, 'Name should be of minimum 6 characters length')
     .required('nickname is required'),
+  email: yup.string().email('Email is not valid'),
   number: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
 });
 
@@ -62,6 +63,18 @@ const EditContactForm = ({ id, initialValues, onSubmit }) => {
           onChange={formik.handleChange}
           error={formik.touched.name && Boolean(formik.errors.name)}
           helperText={formik.touched.name && formik.errors.name}
+        />
+
+        <TextField
+          fullWidth
+          id="email"
+          name="email"
+          label="Email"
+          required
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
         />
 
         <TextField
@@ -127,6 +140,7 @@ EditContactForm.propTypes = {
   id: PropTypes.string.isRequired,
   initialValues: PropTypes.exact({
     name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
     number: PropTypes.string.isRequired,
   }),
 };

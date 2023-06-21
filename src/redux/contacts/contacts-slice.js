@@ -57,7 +57,7 @@ const contactsSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         const index = state.items.findIndex(
-          item => item.id === action.payload.id
+          item => item._id === action.payload._id
         );
         state.items.splice(index, 1, action.payload);
          showSuccessMessage('contact has been successfully updated');
