@@ -11,9 +11,9 @@ const ContactList = () => {
   const visibleContacts = useSelector(getFilteredContacts);
   return (
     <ContactListStyled>
-      {visibleContacts.map(({ id, name, email, number }) => {
+      {visibleContacts.map(({ _id, name, email, number }) => {
         return (
-          <Contact name={name} key={id} email={email} number={number} id={id} />
+          <Contact name={name} key={_id} email={email} number={number} id={_id} />
         );
       })}
     </ContactListStyled>
