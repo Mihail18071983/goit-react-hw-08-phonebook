@@ -1,11 +1,12 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { useEffect } from 'react';
 import PrivateRoute from 'modules/PrivateRoute/PrivateRoute';
 import PublicRoute from 'modules/PublicRoute/PublicRoute';
 import { ColorRing } from 'react-loader-spinner';
 
-import { getCurrentUser } from 'redux/auth/auth-operations';
+import { getCurrentUser, logOut } from 'redux/auth/auth-operations';
+import { isTokenExpired } from 'shared/utils/expiredToken';
 
 import SharedLayout from 'shared/SharedLayout/SharedLayout';
 
@@ -21,9 +22,20 @@ const NotFound = lazy(() => import('./Pages/NotFoundPage'));
 const App = () => {
   const { isRefreshing } = useAuth();
   const dispatch = useDispatch();
+  // const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const refreshToken = localStorage.getItem('refreshToken');
+  //   if (isTokenExpired(refreshToken)) {
+  //     localStorage.removeItem('refreshToken');
+  //     navigate('/login')
+  //   }
+  // },[dispatch, navigate]);
+
   useEffect(() => {
     dispatch(getCurrentUser());
   }, [dispatch]);
+
   return (
     <>
       <GlobalStyle />

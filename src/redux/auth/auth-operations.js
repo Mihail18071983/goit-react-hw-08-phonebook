@@ -6,10 +6,15 @@ import {
   showSuccessMessage,
 } from 'shared/utils/notifications';
 
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+// import {store} from "../store"
 
 
 export const instance = axios.create({
   baseURL: 'http://localhost:3000/api',
+  headers: { 'Content-Type': 'application/json' }
 });
 
 
@@ -21,7 +26,6 @@ const setAuthHeader = token => {
 const clearAuthHeader = () => {
   instance.defaults.headers.common.Authorization = '';
 };
-
 
 instance.interceptors.response.use(
   response => response,
@@ -42,6 +46,14 @@ instance.interceptors.response.use(
       } catch (error) {
         return Promise.reject(error);
       }
+      
+    }
+    if (error.response.status === 403 && error.response.data) {
+      const dispatch = useDispatch();
+      // const navigate=useNavigate()
+      dispatch(logOut());
+      // navigate('/login')
+      return Promise.reject(error.response.data);
     }
     return Promise.reject(error);
   }
@@ -142,3 +154,4 @@ export const getCurrentUser = createAsyncThunk(
     }
   }
 );
+
