@@ -6,17 +6,15 @@ import {
   showSuccessMessage,
 } from 'shared/utils/notifications';
 
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
-// import {store} from "../store"
 
 
 export const instance = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  // baseURL: 'http://localhost:3000/api',
+  baseURL: 'https://restapi-contact-book.onrender.com/api',
   headers: { 'Content-Type': 'application/json' }
 });
-
 
 
 const setAuthHeader = token => {
@@ -28,36 +26,40 @@ const clearAuthHeader = () => {
 };
 
 instance.interceptors.response.use(
-  response => response,
-  async error => {
-    if (error.response.status === 401) {
-      const refreshToken = localStorage.getItem('refreshToken');
-      try {
-        const { data } = await instance.post('/users/refresh', {
-          refreshToken,
-        });
-        console.log('accessToken in interseptor', data.accessToken);
-        setAuthHeader(data.accessToken);
-        localStorage.setItem('refreshToken', data.refreshToken);
-        const updatedConfig = { ...error.config };
-        updatedConfig.headers.Authorization = `Bearer ${data.accessToken}`
-        console.log('updatedConfig', updatedConfig);
-        return instance(updatedConfig);
-      } catch (error) {
+      response => response,
+      async error => {
+        // const navigate=useNavigate();
+        if (error.response.status === 401) {
+          const refreshToken = localStorage.getItem('refreshToken');
+          try {
+            const res = await instance.post('/users/refresh', {
+              refreshToken,
+            });
+            console.log('data in interseptor', res);
+            setAuthHeader(res.data.accessToken);
+            localStorage.setItem('refreshToken', res.data.refreshToken);
+            const updatedConfig = { ...error.config };
+            updatedConfig.headers.Authorization = `Bearer ${res.data.accessToken}`
+            console.log('updatedConfig', updatedConfig);
+            return instance(updatedConfig);
+          } catch (error) {
+            return Promise.reject(error);
+          }
+        }
+        if (error.response.status === 403 && error.response.data) {
+          showErrorMessage('Access forbidden');
+          // navigate('/login')
+          window.location.href = '/login';
+          // return Promise.reject(error.response.data);
+        }
         return Promise.reject(error);
       }
-      
-    }
-    if (error.response.status === 403 && error.response.data) {
-      const dispatch = useDispatch();
-      // const navigate=useNavigate()
-      dispatch(logOut());
-      // navigate('/login')
-      return Promise.reject(error.response.data);
-    }
-    return Promise.reject(error);
-  }
-);
+    );
+
+
+
+
+
 
 
 export const register = createAsyncThunk(
@@ -154,4 +156,5 @@ export const getCurrentUser = createAsyncThunk(
     }
   }
 );
+
 
