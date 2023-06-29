@@ -28,7 +28,6 @@ const clearAuthHeader = () => {
 instance.interceptors.response.use(
       response => response,
       async error => {
-        // const navigate=useNavigate();
         if (error.response.status === 401) {
           const refreshToken = localStorage.getItem('refreshToken');
           try {
@@ -47,10 +46,9 @@ instance.interceptors.response.use(
           }
         }
         if (error.response.status === 403 && error.response.data) {
+          console.log('response error', error.response);
           showErrorMessage('Access forbidden');
-          // navigate('/login')
           window.location.href = '/login';
-          // return Promise.reject(error.response.data);
         }
         return Promise.reject(error);
       }
